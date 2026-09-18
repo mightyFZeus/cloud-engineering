@@ -10,6 +10,7 @@
 - [x] Use AWS CLI temporary credentials without long-lived access keys.
 - [x] Explain Regions, Availability Zones, and shared responsibility.
 - [x] Assume an IAM role and inspect policy-evaluation outcomes.
+- [x] Replace broad read-only access with a narrowly scoped policy.
 - [ ] Complete the Week 1 recall review.
 
 ## Verified progress
@@ -21,6 +22,7 @@
 | 3 | Temporary CLI authentication | Named profile, caller identity, Region query, and logout verified |
 | 4 | Global infrastructure and responsibility model | Three-AZ map and EC2/Lambda comparison verified |
 | 5 | IAM roles and policy evaluation | Assumed-role profile, safe read, and simulated denied write verified |
+| 6 | Least-privilege IAM policy | Three permitted discovery actions worked; S3 write and IAM administration remained denied |
 
 ## Most important lessons
 
@@ -29,6 +31,7 @@
 - Temporary role credentials reduce the risk created by reusable long-lived secrets.
 - Permission policies answer what an identity may do; trust policies answer who may assume a role.
 - Lack of an allow produces an implicit deny, while an explicit deny overrides applicable allows.
+- `Resource: "*"` can be necessary for list and describe actions that do not support individual resource ARNs; least privilege can still be enforced with a narrowly limited `Action` list.
 
 ## Troubleshooting
 

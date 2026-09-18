@@ -528,3 +528,171 @@ Day 5 submission
 - Verified: role creation, `ReadOnlyAccess`, required tags, role-based profile, assumed-role identity, read-only S3 listing, expected policy-simulation decisions, and source-profile logout.
 - Follow-up verified: items 9–11 accurately distinguish user/role, permission/trust policy, and implicit/explicit deny; no additional resources or blockers were reported.
 - **Result:** Passed on September 18, 2026. All six verification criteria are complete.
+
+---
+
+## Day 6 — Replace broad read-only access with least privilege
+
+**Date:** Friday, September 18, 2026  
+**Due:** Before you stop studying today  
+**Timebox:** 60–75 minutes  
+**Outcome:** Replace the broad AWS-managed `ReadOnlyAccess` policy with a small inline policy, then prove that only the intended discovery actions are allowed.
+
+### Learn (10 minutes maximum)
+
+- Read [Managed policies and inline policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html), focusing on the one-to-one relationship between an inline policy and its role.
+- Skim [IAM policy testing with the policy simulator](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_testing-policies.html), focusing on testing without making a real service request.
+
+### Do (45–55 minutes)
+
+1. Start a fresh temporary session:
+
+   ```bash
+   aws login --profile aws-learning --region eu-west-1
+   ```
+
+2. In the AWS console, open **IAM → Roles → AWSLearningReadOnlyRole → Permissions → Add permissions → Create inline policy**. Choose the **JSON** editor and use:
+
+   ```json
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "ReadDiscoveryMetadata",
+         "Effect": "Allow",
+         "Action": [
+           "ec2:DescribeRegions",
+           "ec2:DescribeAvailabilityZones",
+           "s3:ListAllMyBuckets"
+         ],
+         "Resource": "*"
+       }
+     ]
+   }
+   ```
+
+3. Name the inline policy `AWSLearningDiscoveryReadOnlyPolicy` and create it.
+4. Only after the inline policy exists, detach the AWS-managed `ReadOnlyAccess` policy from `AWSLearningReadOnlyRole`. Do not attach `AdministratorAccess` or any replacement broad policy.
+5. Verify the role still performs the intended safe reads:
+
+   ```bash
+   aws ec2 describe-regions \
+     --profile aws-learning-readonly \
+     --query 'length(Regions)' \
+     --output text \
+     --no-cli-pager
+
+   aws ec2 describe-availability-zones \
+     --profile aws-learning-readonly \
+     --region eu-west-1 \
+     --query 'length(AvailabilityZones)' \
+     --output text \
+     --no-cli-pager
+
+   aws s3api list-buckets \
+     --profile aws-learning-readonly \
+     --query 'length(Buckets)' \
+     --output text \
+     --no-cli-pager
+   ```
+
+6. Confirm the broad managed policy is gone and the inline policy is present:
+
+   ```bash
+   aws iam list-attached-role-policies \
+     --role-name AWSLearningReadOnlyRole \
+     --profile aws-learning \
+     --query 'AttachedPolicies[].PolicyName' \
+     --output json \
+     --no-cli-pager
+
+   aws iam list-role-policies \
+     --role-name AWSLearningReadOnlyRole \
+     --profile aws-learning \
+     --output json \
+     --no-cli-pager
+   ```
+
+   Expected: the first command returns an empty list; the second lists `AWSLearningDiscoveryReadOnlyPolicy`.
+7. Resolve the account ID locally, validate it without printing it, and simulate four actions:
+
+   ```bash
+   AWS_LEARNING_ACCOUNT_ID="$(aws sts get-caller-identity \
+     --profile aws-learning \
+     --query Account \
+     --output text)"
+
+   if [[ "$AWS_LEARNING_ACCOUNT_ID" =~ ^[0-9]{12}$ ]]; then
+     echo "Account ID captured successfully"
+   else
+     echo "Account ID capture failed"
+   fi
+
+   aws iam simulate-principal-policy \
+     --policy-source-arn "arn:aws:iam::${AWS_LEARNING_ACCOUNT_ID}:role/AWSLearningReadOnlyRole" \
+     --action-names \
+       ec2:DescribeRegions \
+       s3:ListAllMyBuckets \
+       s3:PutObject \
+       iam:CreateUser \
+     --profile aws-learning \
+     --query 'EvaluationResults[].{Action:EvalActionName,Decision:EvalDecision}' \
+     --output table \
+     --no-cli-pager
+   ```
+
+   Expected: the two discovery reads are `allowed`; the write and IAM-administration actions are `implicitDeny`.
+8. In 3–5 sentences, explain:
+   - why this policy is narrower than `ReadOnlyAccess`;
+   - why `Resource` is `"*"` even though the policy follows least privilege;
+   - the difference between limiting actions and limiting resources.
+9. End the source session and clear the local variable:
+
+   ```bash
+   aws logout --profile aws-learning
+   unset AWS_LEARNING_ACCOUNT_ID
+   ```
+
+### Safety and cost rules
+
+- IAM policy changes and simulations create no billable infrastructure.
+- Do not create a bucket, EC2 instance, access key, IAM user, or real S3 object.
+- Do not submit account IDs, ARNs, credentials, tokens, login URLs, or raw identity output.
+- If an intended read fails, stop and report the exact error; do not restore broad admin access as a shortcut.
+
+### Submit for verification
+
+```text
+Day 6 submission
+1. Inline policy created: yes/no; policy name only
+2. AWS-managed ReadOnlyAccess detached: yes/no
+3. Attached managed-policy list: empty/not empty; names only if not empty
+4. Inline-policy list: [policy names only]
+5. describe-regions: success/failure; count optional
+6. describe-availability-zones: success/failure; count optional
+7. list-buckets: success/failure; count optional
+8. Policy simulation: DescribeRegions=[decision], ListAllMyBuckets=[decision], PutObject=[decision], CreateUser=[decision]
+9. Why the new policy is narrower:
+10. Why Resource is "*":
+11. Action scope vs resource scope:
+12. Source profile logged out: yes/no
+13. Resources created besides the inline policy: none / list
+14. Exact blocker, if any:
+```
+
+### Pass criteria
+
+- [x] `AWSLearningDiscoveryReadOnlyPolicy` exists as an inline role policy.
+- [x] Broad `ReadOnlyAccess` is detached and no other managed policy is attached.
+- [x] The role profile successfully performs all three intended safe reads.
+- [x] Simulation allows the two intended reads and implicitly denies `s3:PutObject` and `iam:CreateUser`.
+- [x] Action scope, resource scope, and the justified use of `Resource: "*"` are explained accurately.
+- [x] The source session is logged out and no workload resources, access keys, secrets, or identifiers are submitted.
+
+### Submission review — September 18, 2026
+
+- Verified: inline policy, removal of all managed policies, three successful discovery reads, expected policy-simulation results, source logout, and no additional resources.
+- Item 11 correctly distinguishes action scope from resource scope.
+- Correction needed: item 9 explains the inline policy's one-to-one ownership, not why its permissions are narrower. Item 10 must explain why these particular list/describe actions require `Resource: "*"` and how the restricted `Action` list still preserves least privilege.
+- Follow-up verified: the new policy is narrower because it permits only three API actions; the wildcard resource is required because these list/describe actions do not support individual resource ARNs, while the restricted action list preserves least privilege.
+- **Result:** Passed on September 18, 2026. All six verification criteria are complete.

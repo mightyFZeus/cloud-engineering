@@ -21,6 +21,7 @@ The course is built around roughly 10 focused hours per week. Every daily milest
 | 3 | AWS CLI with temporary credentials | Passed | [Write-up](docs/week-01/day-03-aws-cli.md) |
 | 4 | Regions, Availability Zones, and shared responsibility | Passed | [Write-up](docs/week-01/day-04-global-infrastructure.md) |
 | 5 | IAM roles and policy evaluation | Passed | [Write-up](docs/week-01/day-05-iam-roles.md) |
+| 6 | Least-privilege IAM policy | Passed | [Write-up](docs/week-01/day-06-least-privilege.md) |
 
 ## Repository map
 
