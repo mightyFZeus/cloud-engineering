@@ -516,9 +516,15 @@ Day 5 submission
 
 ### Pass criteria
 
-- [ ] `AWSLearningReadOnlyRole` exists with `ReadOnlyAccess` and all three tags.
-- [ ] `aws-learning-readonly` successfully assumes the role through `aws-learning`.
-- [ ] The role can perform the safe read-only S3 listing.
-- [ ] Policy simulation allows `s3:ListAllMyBuckets` and denies `s3:PutObject` without executing either action.
-- [ ] User/role, permission/trust policy, and implicit/explicit deny are explained accurately.
-- [ ] The source session is logged out and no access keys, workload resources, secrets, or identifiers are submitted.
+- [x] `AWSLearningReadOnlyRole` exists with `ReadOnlyAccess` and all three tags.
+- [x] `aws-learning-readonly` successfully assumes the role through `aws-learning`.
+- [x] The role can perform the safe read-only S3 listing.
+- [x] Policy simulation allows `s3:ListAllMyBuckets` and denies `s3:PutObject` without executing either action.
+- [x] User/role, permission/trust policy, and implicit/explicit deny are explained accurately.
+- [x] The source session is logged out and no access keys, workload resources, secrets, or identifiers are submitted.
+
+### Submission review — September 18, 2026
+
+- Verified: role creation, `ReadOnlyAccess`, required tags, role-based profile, assumed-role identity, read-only S3 listing, expected policy-simulation decisions, and source-profile logout.
+- Follow-up verified: items 9–11 accurately distinguish user/role, permission/trust policy, and implicit/explicit deny; no additional resources or blockers were reported.
+- **Result:** Passed on September 18, 2026. All six verification criteria are complete.

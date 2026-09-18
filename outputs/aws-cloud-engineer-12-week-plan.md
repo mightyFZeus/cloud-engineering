@@ -72,7 +72,7 @@ Useful setup references: [IAM security best practices](https://docs.aws.amazon.c
 - [x] Root MFA enabled and no root access keys exist.
 - [x] Daily work uses a non-root identity and `aws sts get-caller-identity` succeeds.
 - [x] Zero-spend and monthly budget alerts are active.
-- [ ] Learning repository and Week 1 log exist.
+- [x] Learning repository and Week 1 log exist.
 - [x] I can explain Region versus AZ and AWS versus customer responsibility without notes.
 - [ ] I can explain role versus user without notes.
 
@@ -596,7 +596,7 @@ Do not spend the first month memorizing for an exam. Use the Cloud Practitioner 
 
 | Milestone | Due | Status |
 |---|---:|---|
-| 1. Safe AWS operator (Weeks 1–2) | Sep 27 | ⬜ Not started |
+| 1. Safe AWS operator (Weeks 1–2) | Sep 27 | 🟨 In progress |
 | 2. Networking and resilient compute (Weeks 3–4) | Oct 11 | ⬜ Not started |
 | 3. Secure serverless workload (Weeks 5–7) | Nov 1 | ⬜ Not started |
 | 4. IaC, Kubernetes/EKS, and secure delivery (Weeks 8–10) | Nov 22 | ⬜ Not started |

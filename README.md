@@ -20,11 +20,12 @@ The course is built around roughly 10 focused hours per week. Every daily milest
 | 2 | Verify the security and billing baseline | Passed | [Write-up](docs/week-01/day-02-security-baseline.md) |
 | 3 | AWS CLI with temporary credentials | Passed | [Write-up](docs/week-01/day-03-aws-cli.md) |
 | 4 | Regions, Availability Zones, and shared responsibility | Passed | [Write-up](docs/week-01/day-04-global-infrastructure.md) |
-| 5 | IAM roles and policy evaluation | Assigned | Documentation follows after verification |
+| 5 | IAM roles and policy evaluation | Passed | [Write-up](docs/week-01/day-05-iam-roles.md) |
 
 ## Repository map
 
 - [`docs/week-01/`](docs/week-01/) — verified daily learning notes and command summaries.
+- [`posts/week-01/`](posts/week-01/) — reviewed build-in-public drafts based on verified work.
 - [`outputs/aws-cloud-engineer-12-week-plan.md`](outputs/aws-cloud-engineer-12-week-plan.md) — complete 12-week roadmap.
 - [`outputs/aws-daily-assignment-tracker.md`](outputs/aws-daily-assignment-tracker.md) — assignment evidence and pass criteria.
 - [`outputs/aws-learning-log-template.md`](outputs/aws-learning-log-template.md) — reusable learning-log format.
