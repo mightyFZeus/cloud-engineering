@@ -1,0 +1,28 @@
+.DS_Store
+
+# Environment files and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+**/.aws/
+credentials
+
+# Terraform state and local cache
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+
+# Build and editor output
+.idea/
+.vscode/
+node_modules/
+dist/
+coverage/
+tmp/
+
