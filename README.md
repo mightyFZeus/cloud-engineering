@@ -24,6 +24,7 @@ The course is built around roughly 10 focused hours per week. Every daily milest
 | 6 | Least-privilege IAM policy | Passed | [Write-up](docs/week-01/day-06-least-privilege.md) |
 | 7 | AWS access baseline automation | Passed | [Write-up](docs/week-01/day-07-baseline-automation.md) · [Post draft](posts/week-01/day-07-baseline-automation.md) |
 | 8 | First Linux EC2 instance and cleanup | Passed | [Write-up](docs/week-02/day-08-ec2-session-manager.md) · [Post draft](posts/week-02/day-08-ec2-session-manager.md) |
+| 9 | Go health service under systemd | Passed | [Write-up](docs/week-02/day-09-go-health-systemd.md) · [Post draft](posts/week-02/day-09-go-health-systemd.md) |
 
 ## Repository map
 

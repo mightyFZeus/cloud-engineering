@@ -34,6 +34,7 @@
 | 6 | Sep 18 | Replace broad read-only access with least privilege | Before study ends | ✅ Passed | 6/6 criteria passed | Draft saved |
 | 7 | Sep 18 | Automate a safe AWS access baseline check | Before study ends | ✅ Passed Sep 22 | 6/6 criteria passed | Draft saved |
 | 8 | Sep 22 | Launch, inspect, and clean up a Linux EC2 instance | 11:00 PM | ✅ Passed | 6/6 criteria passed | Draft saved |
+| 9 | Sep 23 | Run a Go health service under systemd on EC2 | 11:00 PM | ✅ Passed | 6/6 criteria passed | Draft saved |
 
 ---
 
@@ -990,4 +991,106 @@ Day 8 submission
 - Confirmed in the follow-up: the retained security group has zero inbound rules and an IPv4 `All traffic` outbound rule, which includes HTTPS; the `Project=cloud-eng-journey` tag was set; the launched instance type was `t3.micro`; and no key pair was created. The earlier `t3.medium` example was not the launched instance type; `t3.micro` provides 2 vCPUs and 1 GiB of memory.
 - The kernel release was not recorded before termination. The other Linux results and successful Session Manager connection were submitted, so no new instance is required solely to recover that one value.
 - **Result:** Passed on September 22, 2026. All six criteria are complete based on the submitted evidence.
+
+---
+
+## Day 9 — Run a Go health service under systemd on EC2
+
+**Date:** Wednesday, September 23, 2026  
+**Due:** 11:00 PM Africa/Lagos  
+**Timebox:** 75–90 minutes  
+**Outcome:** Run a small Go HTTP service on Amazon Linux 2023, manage it with `systemd`, diagnose it using local Linux tools, and clean up the instance.
+
+### Learn (10 minutes maximum)
+
+- Read the [Amazon Linux 2023 journal guide](https://docs.aws.amazon.com/linux/al2023/ug/journald.html) to see why `journalctl` is the standard place to inspect service logs.
+- Review [Session Manager connection steps](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/connect-with-systems-manager-session-manager.html). Reuse the Day 8 instance role and security group.
+
+### Build (55–65 minutes)
+
+1. In this repository, create `labs/week-02/day-09-health/main.go` and `labs/week-02/day-09-health/cloud-eng-health.service`. The Go program must serve `GET /healthz` with HTTP 200 and the body `ok` on `127.0.0.1:8080`. Keep it dependency-free and add no credentials or AWS identifiers. The unit must run as a non-root user, start `/usr/local/bin/cloud-eng-health`, and use `Restart=on-failure`.
+2. Before launching, check the budget and displayed cost. In `eu-west-1`, launch one Amazon Linux 2023 `t3.micro` named `cloud-eng-day9` with `Project=cloud-eng-journey`. Reuse `AWSLearningEC2SSMRole` and the security group with **zero inbound rules**. Use no key pair or extra EBS volume, and verify the root volume has **Delete on termination = Yes**.
+3. Connect through **EC2 → Instances → Connect → Session Manager**. Check that the host can reach the Amazon Linux package repositories, then install Go:
+
+   ```bash
+   sudo dnf install -y golang
+   go version
+   ```
+
+4. Transfer the two local file contents through the Session Manager shell. For each file, start a here-document such as `cat > /tmp/main.go <<'GO'`, paste the local source, and end with a line containing only `GO`; repeat with `cat > /tmp/cloud-eng-health.service <<'UNIT'` and a final `UNIT` line. Then build the Go program on the instance, install the binary and unit, and start the service:
+
+   ```bash
+   go build -o /tmp/cloud-eng-health /tmp/main.go
+   sudo install -m 0755 /tmp/cloud-eng-health /usr/local/bin/cloud-eng-health
+   sudo install -m 0644 /tmp/cloud-eng-health.service /etc/systemd/system/cloud-eng-health.service
+   sudo systemctl daemon-reload
+   sudo systemctl enable --now cloud-eng-health
+   ```
+
+5. Verify the process, local HTTP response, listening port, and recent logs:
+
+   ```bash
+   systemctl is-active cloud-eng-health
+   curl -fsS http://127.0.0.1:8080/healthz
+   ss -lnt | grep '127.0.0.1:8080'
+   sudo journalctl -u cloud-eng-health -n 20 --no-pager
+   ```
+
+6. Prove that `systemd` restarts a failed process. Send SIGKILL to the service's main process, wait a few seconds, then repeat the status and health checks:
+
+   ```bash
+   sudo systemctl kill --signal=SIGKILL --kill-whom=main cloud-eng-health
+   sleep 3
+   systemctl is-active cloud-eng-health
+   curl -fsS http://127.0.0.1:8080/healthz
+   ```
+
+7. Write 3–4 sentences explaining how `systemctl`, `curl`, `ss`, and `journalctl` distinguish a stopped process, a missing listener, a bad HTTP response, and an application error.
+
+### Clean up (10–15 minutes)
+
+- Keep the Go source and unit file in this repository. End the Session Manager session, terminate the Day 9 instance, and verify no Day 9 EBS volume remains.
+- Keep the Day 8 IAM role and security group for the next lab. Do not leave the EC2 instance running overnight.
+
+### Safety and cost rules
+
+- This is one short-lived instance. EC2, EBS, and public IPv4 usage may be billable even if the console estimate appears to be zero; budget alerts are not hard caps.
+- Bind the service to `127.0.0.1` and keep the security group free of inbound rules. Do not expose port 8080 publicly, create an SSH key, or put credentials in code or unit files.
+- Do not submit instance IDs, account IDs, ARNs, IP addresses other than the local loopback address, hostnames, credentials, or raw logs containing identifiers.
+- If package installation, compilation, or Session Manager fails, record the exact error and terminate the instance before submitting the blocker.
+
+### Submit for verification
+
+```text
+Day 9 submission
+1. Go source and systemd unit paths:
+2. AMI, instance type, Region, and budget check:
+3. Instance role; security-group inbound rule count; key pair:
+4. Go version installed:
+5. systemd service user and Restart setting:
+6. Initial systemctl status; curl HTTP status/body; listening address/port:
+7. Relevant journal observation (summary only):
+8. After SIGKILL: service active and health response restored: yes/no
+9. How systemctl, curl, ss, and journalctl isolate failures (3–4 sentences):
+10. Instance terminated; Day 9 EBS volumes remaining:
+11. Exact blocker, if any:
+```
+
+### Pass criteria
+
+- [x] The Go source and `systemd` unit are saved in the project without secrets or identifiers.
+- [x] One budget-checked Amazon Linux 2023 instance used the existing role and zero-inbound security group, with no key pair.
+- [x] The service ran as a non-root user and returned HTTP 200 with `ok` on `127.0.0.1:8080`.
+- [x] `systemctl`, `ss`, and `journalctl` evidence demonstrates the service state, listener, and logs; the service recovered after SIGKILL.
+- [x] The troubleshooting explanation accurately distinguishes process, port, HTTP, and application-log problems.
+- [x] The instance was terminated and no Day 9 EBS volume remains.
+
+### Submission review — September 23, 2026
+
+- The saved Go source builds successfully and contains no detected credentials or AWS identifiers. The matching unit starts `/usr/local/bin/cloud-eng-health` as a non-root user with `Restart=on-failure`.
+- Reported launch controls: budget checked, Amazon Linux 2023 `t3.micro` in `eu-west-1`, `AWSLearningEC2SSMRole`, zero inbound security-group rules, no key pair, and `Project=cloud-eng-journey`.
+- Runtime evidence showed an active service, HTTP 200 with `ok`, and a listener restricted to `127.0.0.1:8080`. The journal recorded startup and listening; its warning about the shared `nobody` account should be addressed with a dedicated or dynamic service identity in a later hardening pass.
+- After SIGKILL, the service returned to `active` and the health response recovered. The troubleshooting explanation correctly maps `systemctl`, `ss`, `curl`, and `journalctl` to distinct failure layers.
+- The instance was reported terminated with zero Day 9 EBS volumes remaining.
+- **Result:** Passed on September 23, 2026. All six criteria are complete based on the submitted evidence.
 
