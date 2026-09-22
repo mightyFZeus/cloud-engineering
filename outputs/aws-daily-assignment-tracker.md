@@ -11,7 +11,7 @@
 2. Submit evidence in this task by 11:00 PM. Never include credentials, tokens, full AWS account IDs, unredacted ARNs, private IPs, or secrets.
 3. The submission is marked **Passed**, **Needs correction**, **Incomplete**, or **Not submitted**.
 4. A failed or incomplete prerequisite is corrected before unrelated work is added.
-5. Meaningful progress produces a build-in-public post draft; milestone completion produces a retrospective post.
+5. When a day passes, save its build-in-public post draft and load the next assignment before reporting completion. Milestone completion also produces a retrospective post.
 6. The 8:00 PM and 10:00 PM reminders stay quiet once that day's assignment has been submitted and verified as Passed.
 
 ## Status key
@@ -30,7 +30,10 @@
 | 2 | Sep 15 | Complete Day 1 account-security and cost-guardrail setup | 11:00 PM | ✅ Passed | 8/8 criteria passed | Draft delivered |
 | 3 | Sep 16 | Install AWS CLI v2 and authenticate with temporary credentials | 11:00 PM | ✅ Passed | 8/8 criteria passed | Draft delivered |
 | 4 | Sep 17 | Map AWS Regions/AZs and explain shared responsibility | 11:00 PM | ✅ Passed | 6/6 criteria passed | Draft delivered |
-| 5 | Sep 18 | Create and assume a read-only IAM role | 11:00 PM | ⬜ Assigned | Pending | Not yet |
+| 5 | Sep 18 | Create and assume a read-only IAM role | 11:00 PM | ✅ Passed | 6/6 criteria passed | Draft saved |
+| 6 | Sep 18 | Replace broad read-only access with least privilege | Before study ends | ✅ Passed | 6/6 criteria passed | Draft saved |
+| 7 | Sep 18 | Automate a safe AWS access baseline check | Before study ends | ✅ Passed Sep 22 | 6/6 criteria passed | Draft saved |
+| 8 | Sep 22 | Launch, inspect, and clean up a Linux EC2 instance | 11:00 PM | ✅ Passed | 6/6 criteria passed | Draft saved |
 
 ---
 
@@ -696,3 +699,295 @@ Day 6 submission
 - Correction needed: item 9 explains the inline policy's one-to-one ownership, not why its permissions are narrower. Item 10 must explain why these particular list/describe actions require `Resource: "*"` and how the restricted `Action` list still preserves least privilege.
 - Follow-up verified: the new policy is narrower because it permits only three API actions; the wildcard resource is required because these list/describe actions do not support individual resource ARNs, while the restricted action list preserves least privilege.
 - **Result:** Passed on September 18, 2026. All six verification criteria are complete.
+
+---
+
+## Day 7 — Automate a safe AWS access baseline check
+
+**Date:** Friday, September 18, 2026  
+**Due:** Before you stop studying today  
+**Timebox:** 60–75 minutes  
+**Outcome:** Write and test a Bash script that validates the Day 6 assumed role and reports only non-sensitive AWS baseline information.
+
+### Learn (10 minutes maximum)
+
+- Read the AWS CLI guide to [`--query` output filtering](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html), focusing on client-side JMESPath queries.
+- Skim the Bash [`set` b-uiltin](https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html), focusing on `-e`, `-u`, and `pipefail`.
+
+### Build (40–50 minutes)
+
+1. Start a new temporary source session:
+
+   ```bash
+   aws login --profile aws-learning --region eu-west-1
+   ```
+
+2. In the root of this learning project, create `scripts/aws-baseline-check.sh` with the following implementation:
+
+   ```bash
+   #!/usr/bin/env bash
+   set -euo pipefail
+
+   profile="${1:-aws-learning-readonly}"
+   expected_region="${AWS_LEARNING_REGION:-eu-west-1}"
+
+   command -v aws >/dev/null 2>&1 || {
+     echo "FAIL: AWS CLI is not installed" >&2
+     exit 1
+   }
+
+   configured_region="$(
+     aws configure get region --profile "$profile" 2>/dev/null || true
+   )"
+
+   if [[ "$configured_region" != "$expected_region" ]]; then
+     echo "FAIL: profile is missing or has an unexpected Region" >&2
+     exit 1
+   fi
+
+   caller_arn="$(
+     aws sts get-caller-identity \
+       --profile "$profile" \
+       --query Arn \
+       --output text
+   )"
+
+   case "$caller_arn" in
+     *":assumed-role/AWSLearningReadOnlyRole/"*)
+       caller_type="assumed-role"
+       ;;
+     *)
+       unset caller_arn
+       echo "FAIL: profile is not using the expected assumed role" >&2
+       exit 1
+       ;;
+   esac
+   unset caller_arn
+
+   region_count="$(
+     aws ec2 describe-regions \
+       --profile "$profile" \
+       --query 'length(Regions)' \
+       --output text \
+       --no-cli-pager
+   )"
+
+   az_count="$(
+     aws ec2 describe-availability-zones \
+       --profile "$profile" \
+       --region "$expected_region" \
+       --filters \
+         Name=zone-type,Values=availability-zone \
+         Name=state,Values=available \
+       --query 'length(AvailabilityZones)' \
+       --output text \
+       --no-cli-pager
+   )"
+
+   bucket_count="$(
+     aws s3api list-buckets \
+       --profile "$profile" \
+       --query 'length(Buckets)' \
+       --output text \
+       --no-cli-pager
+   )"
+
+   printf 'PASS: AWS access baseline\n'
+   printf 'Profile: %s\n' "$profile"
+   printf 'Caller type: %s\n' "$caller_type"
+   printf 'Configured Region: %s\n' "$configured_region"
+   printf 'Regions visible: %s\n' "$region_count"
+   printf 'Standard AZs available: %s\n' "$az_count"
+   printf 'S3 bucket count: %s\n' "$bucket_count"
+   ```
+
+3. Make it executable and run a syntax check:
+
+   ```bash
+   chmod +x scripts/aws-baseline-check.sh
+   bash -n scripts/aws-baseline-check.sh
+   echo $?
+   ```
+
+   Expected exit status: `0`.
+4. Run the successful path:
+
+   ```bash
+   ./scripts/aws-baseline-check.sh
+   ```
+
+   Confirm that it reports an assumed role, `eu-west-1`, and only counts—not an account ID or ARN.
+5. Prove that it fails closed when given a nonexistent profile:
+
+   ```bash
+   if ./scripts/aws-baseline-check.sh missing-profile; then
+     echo "FAIL: nonexistent profile was accepted"
+   else
+     echo "PASS: nonexistent profile was rejected"
+   fi
+   ```
+
+6. Inspect the script before submission:
+
+   ```bash
+   rg -n '(Account|Arn|access.key|secret|token|credential)' \
+     scripts/aws-baseline-check.sh || true
+   ```
+
+   The `Arn` query used only for local classification is expected. No command may print the ARN or account ID.
+7. Write 3–5 sentences explaining:
+   - what `set -euo pipefail` protects against;
+   - why the ARN is captured, classified, unset, and never printed;
+   - how `--query 'length(...)'` reduces output and accidental data exposure.
+8. End the temporary source session:
+
+   ```bash
+   aws logout --profile aws-learning
+   ```
+
+### Safety and cost rules
+
+- This assignment uses only read-only calls and creates no AWS resources.
+- Never add `set -x`; shell tracing could expose sensitive values.
+- Do not print, submit, log, or commit the caller ARN, account ID, credentials, session cache, or login URL.
+- Do not add write permissions to make the script pass.
+
+### Submit for verification
+
+Save the script in the project so it can be inspected, then submit:
+
+```text
+Day 7 submission
+1. Script path: scripts/aws-baseline-check.sh
+2. bash -n exit status:
+3. Successful run: yes/no
+4. Caller type reported:
+5. Configured Region reported:
+6. Region count:
+7. Standard AZ count:
+8. S3 bucket count:
+9. Missing-profile test result:
+10. What set -euo pipefail protects against:
+11. Why the ARN is never printed:
+12. Why length(...) queries are used:
+13. Source profile logged out: yes/no
+14. AWS resources created: none / list
+15. Exact blocker, if any:
+```
+
+### Pass criteria
+
+- [x] The script exists at the required path, contains no embedded credentials or identifiers, and passes `bash -n`.
+- [x] The successful path verifies the assumed role and expected Region without printing an ARN or account ID.
+- [x] Region, standard-AZ, and bucket counts are returned through narrow JMESPath queries.
+- [x] A nonexistent profile is rejected with a non-zero script exit status.
+- [x] Strict mode, local ARN classification, and output minimization are explained accurately.
+- [x] The source session is logged out and no AWS resources, access keys, secrets, or identifiers are created or submitted.
+
+### Submission review — September 22, 2026
+
+- The saved script passes `bash -n`. Its leading space before `#!` prevented direct execution; the shebang was corrected, and the direct missing-profile test now exits 1 with the expected message.
+- The successful AWS run, returned counts, source logout, and absence of new resources are reported in the submission; they were not rerun after logout.
+- Follow-up verified: `-e`, `-u`, and `pipefail` are explained accurately; the ARN is used only to classify the assumed role and is never printed; `length(...)` limits terminal output without changing the data AWS sends to the CLI.
+- **Result:** Passed on September 22, 2026. All six verification criteria are complete.
+
+---
+
+## Day 8 — Launch, inspect, and clean up a Linux EC2 instance
+
+**Date:** Tuesday, September 22, 2026  
+**Due:** 11:00 PM Africa/Lagos  
+**Timebox:** 75–90 minutes  
+**Outcome:** Run one short-lived Amazon Linux instance, connect through Session Manager without an inbound SSH rule, inspect the Linux host, and verify cleanup.
+
+### Learn (15 minutes maximum)
+
+- Read the [EC2 getting-started guide](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html), focusing on the AMI, instance type, security group, storage, and cleanup steps.
+- Read the [Session Manager instance-permission guide](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started-instance-profile.html) and the [network requirements](https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-create-vpc.html). The instance needs an IAM role and outbound HTTPS access; Session Manager needs no inbound port.
+
+### Build (50–60 minutes)
+
+1. Sign in to the AWS console with your everyday MFA-protected identity. Select `eu-west-1` and confirm your budget alerts are active. Check the EC2 launch estimate and your account's Free Tier or credit eligibility before creating anything; do not assume the instance is free.
+2. Create an EC2-trusted IAM role named `AWSLearningEC2SSMRole` and attach only `AmazonSSMManagedInstanceCore` for this lab. Use the role as the instance profile at launch; do not put credentials on the VM.
+3. Launch **one** Amazon Linux 2023 instance named `cloud-eng-day8` with the tag `Project=cloud-eng-journey`. Choose a small instance type whose displayed cost fits your budget. Use one default-size root EBS volume with **Delete on termination** enabled and no extra volumes.
+4. Use an existing default-VPC public subnet with outbound internet access so the SSM Agent can reach AWS over HTTPS. A public IPv4 address may incur a separate charge. Create a security group with **zero inbound rules** and outbound HTTPS access. Select **Proceed without a key pair** because this lab uses Session Manager. Do not create a NAT gateway, VPC endpoint, Elastic IP, or load balancer for this exercise.
+5. Once both EC2 status checks pass, choose **Connect → Session Manager** in the EC2 console. If it is unavailable, check the instance role, SSM Agent status, subnet route, and outbound HTTPS access. Record the exact blocker rather than opening port 22.
+6. In the Session Manager shell, run these read-only checks and record only the summarized results:
+
+   ```bash
+   cat /etc/os-release | sed -n '1,6p'
+   uname -r
+   whoami
+   df -h /
+   systemctl is-active amazon-ssm-agent
+   ss -lnt | tail -n +2 | wc -l
+   ```
+
+7. Write 4–6 sentences explaining what the AMI, instance type, EBS root volume, security group, and instance role each control. Include why Session Manager works without an inbound SSH rule.
+
+### Clean up (10–15 minutes)
+
+1. End the Session Manager session and **terminate** the instance before stopping study today. A stopped instance can still incur EBS storage charges.
+2. Confirm the instance shows `terminated`, the public IPv4 address is released, and no Day 8 EBS volume remains. The IAM role and empty-inbound security group may be reused for the next lab; record that they remain.
+3. Sign out of the AWS console.
+
+### Safety and cost rules
+
+- Keep one instance running only for this lab. EC2, EBS, and public IPv4 usage may be billable; budget alerts are not hard spending caps.
+- Do not add an inbound SSH or HTTP rule, create a key pair, copy credentials to the instance, or install a workload today.
+- Do not submit instance IDs, account IDs, full ARNs, public or private IP addresses, hostnames, login URLs, or raw terminal screenshots.
+- If there is no usable default VPC or the launch estimate does not fit the budget, stop before launch and submit the exact blocker. Do not create a NAT gateway as a workaround.
+
+### Submit for verification
+
+```text
+Day 8 submission
+1. Region:
+2. Budget and launch estimate checked: yes/no; estimated short-lab cost:
+3. AMI and instance type:
+4. Project tag:
+5. Instance role and attached policy:
+6. Security-group inbound rule count; outbound HTTPS available:
+7. Key pair created: yes/no
+8. Session Manager connected: yes/no
+9. Linux OS/version and kernel version:
+10. Root filesystem usage percentage:
+11. SSM Agent status; listening TCP socket count:
+12. Explain AMI, instance type, EBS, security group, role, and no-inbound Session Manager (4–6 sentences):
+13. Instance terminated: yes/no
+14. Day 8 EBS volumes remaining: count
+15. IAM role and security group retained for the next lab: yes/no
+16. Exact blocker, if any:
+```
+
+### Pass criteria
+
+- [x] The Region, budget, and launch estimate were checked before creating one short-lived instance.
+- [x] The instance used Amazon Linux 2023, an EC2 instance role for Session Manager, no key pair, and a security group with no inbound rules.
+- [x] Session Manager connected and the Linux checks returned summarized, non-sensitive evidence.
+- [x] The explanation accurately distinguishes the AMI, instance type, EBS volume, security group, and instance role.
+- [x] The instance was terminated and no Day 8 EBS volume remains.
+- [x] The submission contains no credentials, account or instance identifiers, IP addresses, or secrets.
+
+### Submission review — September 22, 2026
+
+- Reported: `eu-west-1`, budget and estimate checked, Session Manager connected, SSM Agent active, root filesystem 21% used, two listening TCP sockets, instance terminated, and zero Day 8 EBS volumes remaining. These AWS observations were not independently rerun.
+- Correction needed: confirm the AMI was Amazon Linux 2023 (its `ID_LIKE=fedora` field does not mean Fedora is the OS), supply the kernel version from the earlier `uname -r` result if available, and provide the missing project tag and security-group inbound/outbound details.
+- A key pair was reported as created even though this Session Manager lab called for none. Confirm whether it was attached to the instance, remove the unused EC2 key pair and any downloaded private key, and report that cleanup. No new instance is needed solely to correct this.
+- The explanation covers the AMI, EBS, and security group but omits instance type, instance role, and why Session Manager requires no inbound SSH rule. Expand it to 4–6 sentences.
+- The estimated cost of zero is a reported launch estimate, not a confirmed final charge. Check Billing later for EC2, EBS, and public IPv4 usage.
+- **Result:** Needs correction. Three of six criteria are supported by the submission.
+
+### Follow-up review — September 22, 2026
+
+- Amazon Linux 2023 was confirmed, and the earlier `Fedora` description was corrected. The reported Session Manager connection and summarized Linux checks now support the Linux-evidence criterion; the kernel release was not supplied.
+- The latest reply says no key pair was created, correcting the earlier `yes`. The retained security group was reported to have no inbound or outbound rules. Zero outbound rules conflict with the reported successful Session Manager connection, so the group attached to the instance and its outbound rules need to be checked in the EC2 console.
+- The expanded explanation covers all requested components, but describes `t3.medium` (2 vCPUs, 4 GiB) while the submitted instance type was `t3.micro` (2 vCPUs, 1 GiB). The project tag is still unreported.
+- **Result:** Needs correction. Four of six criteria are supported by the submission.
+
+### Final review — September 22, 2026
+
+- Confirmed in the follow-up: the retained security group has zero inbound rules and an IPv4 `All traffic` outbound rule, which includes HTTPS; the `Project=cloud-eng-journey` tag was set; the launched instance type was `t3.micro`; and no key pair was created. The earlier `t3.medium` example was not the launched instance type; `t3.micro` provides 2 vCPUs and 1 GiB of memory.
+- The kernel release was not recorded before termination. The other Linux results and successful Session Manager connection were submitted, so no new instance is required solely to recover that one value.
+- **Result:** Passed on September 22, 2026. All six criteria are complete based on the submitted evidence.
+

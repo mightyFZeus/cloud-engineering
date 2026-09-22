@@ -23,6 +23,7 @@
 | 4 | Global infrastructure and responsibility model | Three-AZ map and EC2/Lambda comparison verified |
 | 5 | IAM roles and policy evaluation | Assumed-role profile, safe read, and simulated denied write verified |
 | 6 | Least-privilege IAM policy | Three permitted discovery actions worked; S3 write and IAM administration remained denied |
+| 7 | AWS access baseline automation | Script checked the role and Region, returned narrow counts, rejected a missing profile, and passed syntax review |
 
 ## Most important lessons
 
@@ -39,7 +40,7 @@ A temporary AWS Sign-In endpoint connection failure prevented the CLI from refre
 
 ## Security and cost
 
-No credentials, account identifiers, complete ARNs, or raw identity output are stored in this repository. No billable workload resources were created during Days 1–5. The read-only learning role remains available for later labs.
+No credentials, account identifiers, complete ARNs, or raw identity output are stored in this repository. No billable workload resources were created during Days 1–7. The read-only learning role remains available for later labs.
 
 ## Next actions
 
