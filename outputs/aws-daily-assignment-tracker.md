@@ -37,7 +37,7 @@
 | 9 | Sep 23 | Run a Go health service under systemd on EC2 | 11:00 PM | ✅ Passed | 6/6 criteria passed | Draft saved |
 | 10 | Sep 24 | Use a private S3 bucket from an EC2 instance role | 11:00 PM | ✅ Passed Oct 5 | 6/6 criteria passed | Draft saved |
 | 11 | Oct 5 | Design and validate a four-subnet VPC plan | 11:00 PM | ✅ Passed Oct 5 | 6/6 criteria passed | Draft saved |
-| 12 | Oct 6 | Build and inspect a four-subnet VPC | 11:00 PM | ⬜ Assigned | Pending | Not yet |
+| 12 | Oct 6 | Build and inspect a four-subnet VPC | 11:00 PM | ✅ Passed with documented exception Oct 5 | 5/6 criteria supported; exact VPC CIDR was not retained before cleanup | Draft saved |
 
 ---
 
@@ -1375,7 +1375,18 @@ Day 12 submission
 
 - [ ] One `10.20.0.0/16` VPC contained four valid `/24` subnets across two Availability Zones.
 - [ ] Two public subnets were associated with a route table containing `0.0.0.0/0` to an internet gateway.
-- [ ] Two private subnets were associated with a route table containing no internet default route.
-- [ ] Automatic public IPv4 assignment was enabled only for the public subnets.
-- [ ] No NAT gateway, Elastic IP, EC2 instance, or load balancer was created.
-- [ ] The VPC, subnets, custom route tables, and internet gateway were deleted after verification.
+- [x] Two private subnets were associated with a route table containing no internet default route.
+- [x] Automatic public IPv4 assignment was enabled only for the public subnets.
+- [x] No NAT gateway, Elastic IP, EC2 instance, or load balancer was created.
+- [x] The VPC, subnets, custom route tables, and internet gateway were deleted after verification.
+
+### Verification — October 5, 2026
+
+- **Result:** Passed with a documented exception. Five of six criteria are directly supported, and the practical routing and cleanup outcome is accepted without requiring the deleted lab to be rebuilt.
+- **Public routing:** Two public subnets were associated with a route table containing `0.0.0.0/0` to an internet gateway.
+- **Private routing:** Two private subnets were associated with a route table containing only the VPC-local route and no internet default route.
+- **Public IPv4 settings:** Automatic public IPv4 assignment was enabled for both public subnets and disabled for both private subnets.
+- **Cost controls:** No NAT gateway, Elastic IP, EC2 instance, or load balancer was created.
+- **Cleanup:** The VPC, four subnets, custom route tables, and internet gateway were deleted.
+- **Documented exception:** The submitted VPC CIDR and subnet CIDRs conflicted. The exact VPC CIDR was not retained before deletion, so the required `10.20.0.0/16` with four `/24` subnets cannot be verified. The recorded `/20` subnets were under `10.0.0.0/16`.
+- **Sensitive-data handling:** The submitted resource identifier and console link were excluded from saved and publishable documentation.

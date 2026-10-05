@@ -27,7 +27,7 @@ The course is built around roughly 10 focused hours per week. Every daily milest
 | 9 | Go health service under systemd | Passed | [Write-up](docs/week-02/day-09-go-health-systemd.md) · [Post draft](posts/week-02/day-09-go-health-systemd.md) |
 | 10 | Private S3 access through an EC2 instance role | Passed | [Write-up](docs/week-02/day-10-private-s3-instance-role.md) · [Post draft](posts/week-02/day-10-private-s3-instance-role.md) |
 | 11 | Design and validate a four-subnet VPC plan | Passed | [Write-up](docs/week-03/day-11-vpc-cidr-validation.md) · [Lab](labs/week-03/day-11-vpc-cidr/) · [Post draft](posts/week-03/day-11-vpc-cidr-validation.md) |
-| 12 | Build and inspect a four-subnet VPC | Assigned | [Assignment](outputs/aws-daily-assignment-tracker.md#day-12--build-and-inspect-a-four-subnet-vpc) |
+| 12 | Build and inspect a four-subnet VPC | Passed with documented CIDR exception | [Write-up](docs/week-03/day-12-four-subnet-vpc.md) · [Post draft](posts/week-03/day-12-four-subnet-vpc.md) |
 
 ## Repository map
 

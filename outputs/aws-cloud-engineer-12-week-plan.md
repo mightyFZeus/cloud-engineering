@@ -143,7 +143,7 @@ The Week 2 runbook, learning log, and Milestone 1 post draft were prepared on Oc
 - [ ] The diagram labels AZs, routes, IGW, optional NAT, and security boundaries.
 - [x] I can explain security groups versus NACLs and public versus private subnets.
 - [ ] I broke and repaired connectivity using evidence rather than random changes.
-- [ ] All temporary resources were destroyed.
+- [x] All temporary resources were destroyed.
 
 ---
 
