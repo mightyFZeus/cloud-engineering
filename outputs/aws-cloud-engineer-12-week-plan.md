@@ -139,9 +139,9 @@ The Week 2 runbook, learning log, and Milestone 1 post draft were prepared on Oc
 
 ### Done checklist
 
-- [ ] Four valid, non-overlapping subnet CIDRs are documented.
+- [x] Four valid, non-overlapping subnet CIDRs are documented.
 - [ ] The diagram labels AZs, routes, IGW, optional NAT, and security boundaries.
-- [ ] I can explain security groups versus NACLs and public versus private subnets.
+- [x] I can explain security groups versus NACLs and public versus private subnets.
 - [ ] I broke and repaired connectivity using evidence rather than random changes.
 - [ ] All temporary resources were destroyed.
 
@@ -599,7 +599,7 @@ Do not spend the first month memorizing for an exam. Use the Cloud Practitioner 
 | Milestone | Due | Status |
 |---|---:|---|
 | 1. Safe AWS operator (Weeks 1–2) | Sep 27 | 🟨 Core labs passed; stop exercise and external post pending |
-| 2. Networking and resilient compute (Weeks 3–4) | Oct 11 | ⬜ Not started |
+| 2. Networking and resilient compute (Weeks 3–4) | Oct 11 | 🟨 In progress |
 | 3. Secure serverless workload (Weeks 5–7) | Nov 1 | ⬜ Not started |
 | 4. IaC, Kubernetes/EKS, and secure delivery (Weeks 8–10) | Nov 22 | ⬜ Not started |
 | 5. Operable, portfolio-ready capstone (Weeks 11–12) | Dec 6 | ⬜ Not started |

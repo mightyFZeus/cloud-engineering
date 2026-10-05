@@ -26,14 +26,17 @@ The course is built around roughly 10 focused hours per week. Every daily milest
 | 8 | First Linux EC2 instance and cleanup | Passed | [Write-up](docs/week-02/day-08-ec2-session-manager.md) · [Post draft](posts/week-02/day-08-ec2-session-manager.md) |
 | 9 | Go health service under systemd | Passed | [Write-up](docs/week-02/day-09-go-health-systemd.md) · [Post draft](posts/week-02/day-09-go-health-systemd.md) |
 | 10 | Private S3 access through an EC2 instance role | Passed | [Write-up](docs/week-02/day-10-private-s3-instance-role.md) · [Post draft](posts/week-02/day-10-private-s3-instance-role.md) |
-| 11 | Design and validate a four-subnet VPC plan | Assigned | [Assignment](outputs/aws-daily-assignment-tracker.md#day-11--design-and-validate-a-four-subnet-vpc-plan) |
+| 11 | Design and validate a four-subnet VPC plan | Passed | [Write-up](docs/week-03/day-11-vpc-cidr-validation.md) · [Lab](labs/week-03/day-11-vpc-cidr/) · [Post draft](posts/week-03/day-11-vpc-cidr-validation.md) |
+| 12 | Build and inspect a four-subnet VPC | Assigned | [Assignment](outputs/aws-daily-assignment-tracker.md#day-12--build-and-inspect-a-four-subnet-vpc) |
 
 ## Repository map
 
 - [`docs/week-01/`](docs/week-01/) — verified daily learning notes and command summaries.
 - [`docs/week-02/`](docs/week-02/) — EC2, Linux, S3, and Week 2 operations notes.
+- [`docs/week-03/`](docs/week-03/) — VPC planning, routing, and network-validation notes.
 - [`posts/week-01/`](posts/week-01/) — reviewed build-in-public drafts based on verified work.
 - [`posts/week-02/`](posts/week-02/) — Week 2 build-in-public drafts.
+- [`posts/week-03/`](posts/week-03/) — Week 3 build-in-public drafts.
 - [`outputs/aws-cloud-engineer-12-week-plan.md`](outputs/aws-cloud-engineer-12-week-plan.md) — complete 12-week roadmap.
 - [`outputs/aws-daily-assignment-tracker.md`](outputs/aws-daily-assignment-tracker.md) — assignment evidence and pass criteria.
 - [`outputs/aws-learning-log-template.md`](outputs/aws-learning-log-template.md) — reusable learning-log format.

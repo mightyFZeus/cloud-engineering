@@ -36,7 +36,8 @@
 | 8 | Sep 22 | Launch, inspect, and clean up a Linux EC2 instance | 11:00 PM | ✅ Passed | 6/6 criteria passed | Draft saved |
 | 9 | Sep 23 | Run a Go health service under systemd on EC2 | 11:00 PM | ✅ Passed | 6/6 criteria passed | Draft saved |
 | 10 | Sep 24 | Use a private S3 bucket from an EC2 instance role | 11:00 PM | ✅ Passed Oct 5 | 6/6 criteria passed | Draft saved |
-| 11 | Oct 5 | Design and validate a four-subnet VPC plan | 11:00 PM | ⬜ Assigned | Pending | Not yet |
+| 11 | Oct 5 | Design and validate a four-subnet VPC plan | 11:00 PM | ✅ Passed Oct 5 | 6/6 criteria passed | Draft saved |
+| 12 | Oct 6 | Build and inspect a four-subnet VPC | 11:00 PM | ⬜ Assigned | Pending | Not yet |
 
 ---
 
@@ -1289,9 +1290,92 @@ Day 11 submission
 
 ### Pass criteria
 
-- [ ] Four `/24` subnet CIDRs are inside `10.20.0.0/16` and do not overlap.
-- [ ] The plan places one public and one private subnet in each of two Availability Zones.
-- [ ] The Go validator rejects an overlapping or out-of-range subnet with a nonzero exit status.
-- [ ] The corrected plan passes after the deliberate failure.
-- [ ] The explanation accurately covers routes, public IPv4 addressing, security groups, and network ACLs.
-- [ ] No AWS resources were created and no sensitive data was recorded.
+- [x] Four `/24` subnet CIDRs are inside `10.20.0.0/16` and do not overlap.
+- [x] The plan places one public and one private subnet in each of two Availability Zones.
+- [x] The Go validator rejects an overlapping or out-of-range subnet with a nonzero exit status.
+- [x] The corrected plan passes after the deliberate failure.
+- [x] The explanation accurately covers routes, public IPv4 addressing, security groups, and network ACLs.
+- [x] No AWS resources were created and no sensitive data was recorded.
+
+### Partial submission — October 5, 2026
+
+- **Received:** Submission field 8, covering public and private subnet routing plus security groups and network ACLs.
+- **Accepted concepts:** A public subnet has a route to an internet gateway; a private subnet lacks that direct route; network ACLs filter at subnet boundaries; security groups apply to associated resources.
+- **Corrections required:** For direct IPv4 internet communication, a resource in a public subnet also needs a public IPv4 address. Security groups are stateful and contain allow rules, while network ACLs are stateless and support allow and deny rules. Private subnets commonly use NAT for general outbound IPv4 internet access, but supported AWS services can instead be reached through VPC endpoints. Public and private placement should follow workload needs rather than a universal rule that all resources belong in private subnets.
+
+### Partial verification 2 — October 5, 2026
+
+- **Accepted:** Field 8 now accurately explains internet-gateway routing, the public IPv4 requirement, NAT and VPC endpoint options, stateful security groups, stateless network ACLs, and appropriate public/private workload placement.
+- **Status:** The networking explanation criterion passes. Submission fields 1–7 and 9–10 remain pending.
+
+### Final verification — October 5, 2026
+
+- **Result:** Passed. All six criteria are supported by the submission and direct checks of the saved files.
+- **Valid plan:** `gofmt -d` returned no changes, and the validator exited `0` after accepting four non-overlapping `/24` subnets inside `10.20.0.0/16`.
+- **Failure test:** An isolated copy with `private-a` changed to overlap `public-a` exited `1` and identified the overlapping CIDRs. The saved corrected program continued to exit `0`.
+- **Safety:** The README and Go source contained no credentials, account identifiers, ARNs, email addresses, or private environment details. No AWS resources were created.
+
+---
+
+## Day 12 — Build and inspect a four-subnet VPC
+
+**Date:** Tuesday, October 6, 2026
+**Due:** 11:00 PM Africa/Lagos
+**Timebox:** 75–90 minutes
+**Outcome:** Build the Day 11 network plan in `eu-west-1`, prove which subnets are public or private from their route tables, and delete every temporary network resource.
+
+### Learn (10–15 minutes maximum)
+
+- Review [Create a VPC](https://docs.aws.amazon.com/vpc/latest/userguide/create-vpc.html).
+- Read [Configure route tables](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html), focusing on local and default routes.
+
+### Build (45–55 minutes)
+
+1. Sign in with the everyday MFA-protected identity, select `eu-west-1`, and check the budget dashboard. Create a VPC named `cloud-eng-day12` with IPv4 CIDR `10.20.0.0/16`, no IPv6 CIDR, and default tenancy.
+2. Create four subnets using the validated plan. Use two available Availability Zones and record the actual choices:
+   - `cloud-eng-day12-public-a`: `10.20.0.0/24`
+   - `cloud-eng-day12-private-a`: `10.20.1.0/24`
+   - `cloud-eng-day12-public-b`: `10.20.2.0/24`
+   - `cloud-eng-day12-private-b`: `10.20.3.0/24`
+3. Create `cloud-eng-day12-igw` and attach it to the VPC.
+4. Create `cloud-eng-day12-public-rt`. Add `0.0.0.0/0` with the internet gateway as its target and explicitly associate both public subnets. Confirm the VPC-local route remains present.
+5. Enable automatic public IPv4 assignment on the two public subnets. Leave it disabled on both private subnets.
+6. Create `cloud-eng-day12-private-rt` and explicitly associate both private subnets. Confirm it contains the VPC-local route and no `0.0.0.0/0` route.
+7. From the route-table and subnet screens, record only route destinations, target types, associations, and public-IP assignment settings. Do not submit resource IDs or screenshots containing account information.
+
+### Clean up (10–15 minutes)
+
+1. Delete the four subnets and both custom route tables.
+2. Detach and delete the internet gateway.
+3. Delete `cloud-eng-day12` and confirm no Day 12 VPC, subnet, route-table, internet-gateway, NAT-gateway, Elastic IP, or EC2 resource remains.
+
+### Safety and cost rules
+
+- Create no NAT gateway, Elastic IP, EC2 instance, load balancer, or VPC endpoint. These are unnecessary for this lab and some accrue charges.
+- A VPC, subnet, route table, and internet gateway have no hourly charge by themselves, but always verify the current console estimate and budget.
+- Do not submit account IDs, VPC or subnet IDs, route-table IDs, internet-gateway IDs, ARNs, IP addresses assigned to real resources, credentials, or raw console output.
+
+### Submit for verification
+
+```text
+Day 12 submission
+1. Region; budget checked:
+2. VPC CIDR:
+3. Four subnet purpose/AZ/CIDR rows:
+4. Public route table: associated subnet count; default-route destination and target type:
+5. Private route table: associated subnet count; routes present:
+6. Automatic public IPv4 assignment: public subnets; private subnets:
+7. Explain what made the two public subnets public and the two private subnets private (2–4 sentences):
+8. NAT gateways, Elastic IPs, EC2 instances, and load balancers created:
+9. VPC, subnets, custom route tables, and internet gateway deleted: yes/no
+10. Exact blocker, if any:
+```
+
+### Pass criteria
+
+- [ ] One `10.20.0.0/16` VPC contained four valid `/24` subnets across two Availability Zones.
+- [ ] Two public subnets were associated with a route table containing `0.0.0.0/0` to an internet gateway.
+- [ ] Two private subnets were associated with a route table containing no internet default route.
+- [ ] Automatic public IPv4 assignment was enabled only for the public subnets.
+- [ ] No NAT gateway, Elastic IP, EC2 instance, or load balancer was created.
+- [ ] The VPC, subnets, custom route tables, and internet gateway were deleted after verification.
