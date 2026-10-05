@@ -35,6 +35,8 @@
 | 7 | Sep 18 | Automate a safe AWS access baseline check | Before study ends | ✅ Passed Sep 22 | 6/6 criteria passed | Draft saved |
 | 8 | Sep 22 | Launch, inspect, and clean up a Linux EC2 instance | 11:00 PM | ✅ Passed | 6/6 criteria passed | Draft saved |
 | 9 | Sep 23 | Run a Go health service under systemd on EC2 | 11:00 PM | ✅ Passed | 6/6 criteria passed | Draft saved |
+| 10 | Sep 24 | Use a private S3 bucket from an EC2 instance role | 11:00 PM | ✅ Passed Oct 5 | 6/6 criteria passed | Draft saved |
+| 11 | Oct 5 | Design and validate a four-subnet VPC plan | 11:00 PM | ⬜ Assigned | Pending | Not yet |
 
 ---
 
@@ -1094,3 +1096,202 @@ Day 9 submission
 - The instance was reported terminated with zero Day 9 EBS volumes remaining.
 - **Result:** Passed on September 23, 2026. All six criteria are complete based on the submitted evidence.
 
+---
+
+## Day 10 — Use a private S3 bucket from an EC2 instance role
+
+**Date:** Thursday, September 24, 2026
+**Due:** 11:00 PM Africa/Lagos
+**Timebox:** 75–90 minutes
+**Outcome:** Use an EC2 instance role to copy and synchronize files with one private S3 bucket, verify its security settings and access boundary, and remove every temporary resource.
+
+### Learn (10 minutes maximum)
+
+- Read [Blocking public access to S3 storage](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html), focusing on the four bucket-level settings.
+- Review [IAM roles for Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html). The AWS CLI on the instance must obtain temporary credentials from the instance role; do not configure access keys.
+
+### Build (55–65 minutes)
+
+1. Sign in with the everyday MFA-protected identity, select `eu-west-1`, check the budget and displayed EC2 estimate, and create one uniquely named general-purpose S3 bucket. Keep **Block all public access** enabled, leave ACLs disabled, and use the default server-side encryption. Do not record or submit the globally unique bucket name.
+2. On `AWSLearningEC2SSMRole`, add a temporary inline policy named `AWSLearningDay10S3`. Replace `BUCKET_NAME` in both resource entries with the exact bucket name:
+
+   ```json
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "InspectOneBucket",
+         "Effect": "Allow",
+         "Action": [
+           "s3:GetBucketLocation",
+           "s3:GetBucketPublicAccessBlock",
+           "s3:GetEncryptionConfiguration",
+           "s3:ListBucket"
+         ],
+         "Resource": "arn:aws:s3:::BUCKET_NAME"
+       },
+       {
+         "Sid": "UseObjectsInOneBucket",
+         "Effect": "Allow",
+         "Action": [
+           "s3:GetObject",
+           "s3:PutObject",
+           "s3:DeleteObject"
+         ],
+         "Resource": "arn:aws:s3:::BUCKET_NAME/*"
+       }
+     ]
+   }
+   ```
+
+3. Launch one short-lived Amazon Linux 2023 `t3.micro` named `cloud-eng-day10` with `Project=cloud-eng-journey`. Reuse `AWSLearningEC2SSMRole` and the zero-inbound security group, use no key pair or extra volume, and confirm **Delete on termination = Yes**.
+4. Connect through Session Manager. Set the bucket name only in the shell, confirm the CLI works through the instance role without printing identity details, and inspect public-access blocking and encryption:
+
+   ```bash
+   BUCKET='replace-with-your-bucket-name'
+   aws s3api get-public-access-block \
+     --bucket "$BUCKET" \
+     --query 'PublicAccessBlockConfiguration'
+   aws s3api get-bucket-encryption \
+     --bucket "$BUCKET" \
+     --query 'ServerSideEncryptionConfiguration.Rules[].ApplyServerSideEncryptionByDefault.SSEAlgorithm'
+   ```
+
+   Record only whether all four public-access settings are `true` and the encryption algorithm. Do not submit the bucket name or raw credential/identity output.
+5. Create three harmless files, upload one with `cp`, synchronize the directory, download one object, and compare the original with the download:
+
+   ```bash
+   mkdir -p /tmp/day10-source /tmp/day10-download
+   printf 'health-check\n' > /tmp/day10-source/health.txt
+   printf 'instance-role\n' > /tmp/day10-source/access.txt
+   printf 'private-bucket\n' > /tmp/day10-source/storage.txt
+
+   aws s3 cp /tmp/day10-source/health.txt "s3://$BUCKET/manual/health.txt"
+   aws s3 sync /tmp/day10-source/ "s3://$BUCKET/sync/"
+   aws s3 cp "s3://$BUCKET/sync/access.txt" /tmp/day10-download/access.txt
+   cmp /tmp/day10-source/access.txt /tmp/day10-download/access.txt
+   aws s3api list-objects-v2 --bucket "$BUCKET" --query 'length(Contents)' --output text
+   ```
+
+6. Explain in 3–4 sentences why the instance needed no stored AWS keys, how the inline policy restricts access to one bucket, how Block Public Access differs from IAM permission, and what `cp` and `sync` each did.
+
+### Clean up (10–15 minutes)
+
+1. From the instance, delete every object and confirm the count is zero:
+
+   ```bash
+   aws s3 rm "s3://$BUCKET" --recursive
+   aws s3api list-objects-v2 --bucket "$BUCKET" --query 'length(Contents)' --output text
+   unset BUCKET
+   ```
+
+2. End the Session Manager session and terminate the EC2 instance. Confirm zero Day 10 EBS volumes remain.
+3. In the S3 console, delete the empty bucket. In IAM, delete the `AWSLearningDay10S3` inline policy from `AWSLearningEC2SSMRole`. Keep the base SSM role and zero-inbound security group for later labs.
+
+### Safety and cost rules
+
+- Keep the bucket private. Do not disable Block Public Access, add a public bucket policy or ACL, expose an EC2 inbound port, or create an access key.
+- Keep one instance and one bucket only for this lab. EC2, EBS, public IPv4, S3 storage, and requests may be billable even when the displayed estimate is zero.
+- Do not submit bucket names, account or instance identifiers, ARNs, IP addresses, hostnames, credentials, or raw metadata-service output.
+- If the role returns `AccessDenied`, inspect the requested action and resource against the inline policy. Do not broaden it to `s3:*` or `Resource: "*"`.
+
+### Submit for verification
+
+```text
+Day 10 submission
+1. Region; budget and launch estimate checked:
+2. AMI and instance type; project tag:
+3. Instance role; security-group inbound rule count; key pair:
+4. Bucket Block Public Access settings; encryption algorithm:
+5. Temporary inline policy name; bucket and object resource scopes:
+6. aws s3 cp result; aws s3 sync result; object count:
+7. Downloaded object matched its source: yes/no
+8. Explain instance-role credentials, one-bucket scope, Block Public Access, cp, and sync (3–4 sentences):
+9. Instance terminated; Day 10 EBS volumes remaining:
+10. Bucket deleted; temporary inline policy deleted:
+11. Exact blocker, if any:
+```
+
+### Pass criteria
+
+- [x] One private bucket kept all four Block Public Access settings enabled and used server-side encryption.
+- [x] One short-lived instance used the existing role, zero-inbound security group, and no key pair or stored AWS credentials.
+- [x] The temporary policy allowed only the required bucket and object actions against one bucket.
+- [x] `cp`, `sync`, download, comparison, and narrow object-count checks succeeded through the instance role.
+- [x] The explanation accurately distinguishes instance-role credentials, IAM access, public-access blocking, `cp`, and `sync`.
+- [x] The instance, EBS volume, bucket objects, bucket, and temporary inline policy were removed.
+
+### Verification attempt — October 5, 2026
+
+- **Result:** Needs correction. Two of six criteria are supported by the submitted evidence.
+- **Accepted evidence:** Amazon Linux 2023 EC2 configuration used the intended instance role, zero inbound rules, and no key pair; the instance was terminated, zero Day 10 EBS volumes remained, and the bucket and temporary inline policy were deleted.
+- **Corrections required:** Report all four Block Public Access values, the bucket and object resource scopes, the `cp` and `sync` results, the object count, and the required 3–4 sentence explanation. Correct the apparent `t3.mirco` and `AWSLearningEC2SSMRole` typing errors when resubmitting.
+
+### Verification attempt 2 — October 5, 2026
+
+- **Result:** Needs correction. Five of six criteria are supported by the combined submission.
+- **Accepted evidence:** The four Block Public Access values were `true`; encryption was `AES256`; the corrected instance type and role were supplied; the temporary policy was scoped to one bucket and its objects; `cp`, `sync`, download comparison, explanation, and cleanup were reported successful.
+- **Unresolved evidence:** The submitted object count was `252`. The prescribed commands create four objects: one under `manual/` and three under `sync/`. Because the bucket was already deleted, this count cannot be checked against the bucket now.
+
+### Final verification — October 5, 2026
+
+- **Result:** Passed. All six criteria are supported by the combined submission.
+- **Final correction:** The actual object count was confirmed as `4`, matching one object uploaded under `manual/` and three objects synchronized under `sync/`.
+- **Cleanup:** The EC2 instance was terminated, zero Day 10 EBS volumes remained, and the objects, bucket, and temporary inline policy were deleted.
+
+---
+
+## Day 11 — Design and validate a four-subnet VPC plan
+
+**Date:** Monday, October 5, 2026
+**Due:** 11:00 PM Africa/Lagos
+**Timebox:** 60–90 minutes
+**Outcome:** Design four valid, non-overlapping `/24` subnets inside `10.20.0.0/16`, validate them with a small Go program, and explain the route and security boundaries before creating AWS networking resources.
+
+### Learn (10–15 minutes maximum)
+
+- Read [What is Amazon VPC?](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html).
+- Review [VPC subnet basics](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-subnet-basics.html), focusing on CIDR ranges and public versus private subnets.
+
+### Build (40–55 minutes)
+
+1. Create `labs/week-03/day-11-vpc-cidr/` and add a short `README.md` containing a table with four `/24` subnets inside `10.20.0.0/16`: one public and one private subnet in each of two Availability Zones. Record each subnet's purpose, AZ, CIDR, and intended default route.
+2. Create `main.go` in the same directory. Use Go's `net/netip` package to parse the VPC and subnet prefixes and fail if a subnet is outside the VPC or overlaps another subnet. Do not use a third-party dependency.
+3. Run `gofmt -w main.go`, `go run main.go`, and record the successful validation result.
+4. Deliberately duplicate one subnet CIDR, rerun the validator, and record the nonzero failure. Restore the correct CIDR and confirm validation succeeds again.
+5. In the README, explain in 4–6 sentences:
+   - why `/24` networks inside the `/16` do not overlap when their third octets differ;
+   - that a public subnet requires a route to an internet gateway and a resource still needs a public address for direct IPv4 internet communication;
+   - that the planned private subnets have no internet default route today;
+   - that security groups are stateful and attached to resources, while network ACLs are stateless subnet controls.
+
+### Safety and cost rules
+
+- Create no AWS resources today; this is a local design and validation lab with an expected AWS cost of zero.
+- Do not add a NAT gateway, instance, public IP, or internet gateway.
+- Do not include AWS account identifiers, credentials, private environment details, or copied production network ranges.
+
+### Submit for verification
+
+```text
+Day 11 submission
+1. README path; Go validator path:
+2. VPC CIDR:
+3. Four subnet purpose/AZ/CIDR/default-route rows:
+4. gofmt completed: yes/no
+5. Valid-plan result:
+6. Deliberate overlap test produced a nonzero failure: yes/no
+7. Corrected plan passed again: yes/no
+8. Explain public/private subnet routing and security groups versus NACLs (4–6 sentences):
+9. AWS resources created:
+10. Exact blocker, if any:
+```
+
+### Pass criteria
+
+- [ ] Four `/24` subnet CIDRs are inside `10.20.0.0/16` and do not overlap.
+- [ ] The plan places one public and one private subnet in each of two Availability Zones.
+- [ ] The Go validator rejects an overlapping or out-of-range subnet with a nonzero exit status.
+- [ ] The corrected plan passes after the deliberate failure.
+- [ ] The explanation accurately covers routes, public IPv4 addressing, security groups, and network ACLs.
+- [ ] No AWS resources were created and no sensitive data was recorded.

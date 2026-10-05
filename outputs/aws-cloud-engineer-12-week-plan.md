@@ -105,11 +105,13 @@ Useful setup references: [IAM security best practices](https://docs.aws.amazon.c
 ### Done checklist — Milestone 1: safe AWS operator
 
 - [ ] I can start, inspect, stop, and terminate EC2 deliberately.
-- [ ] My Go service is managed by `systemd` and survives a process restart.
-- [ ] I used an instance role for S3 access rather than embedding credentials.
-- [ ] The S3 bucket was private and all billable lab resources were cleaned up.
-- [ ] Week 2 runbook and learning log are committed.
+- [x] My Go service is managed by `systemd` and survives a process restart.
+- [x] I used an instance role for S3 access rather than embedding credentials.
+- [x] The S3 bucket was private and all billable lab resources were cleaned up.
+- [x] Week 2 runbook and learning log are committed.
 - [ ] Milestone 1 build-in-public post was drafted and published or scheduled.
+
+The Week 2 runbook, learning log, and Milestone 1 post draft were prepared on October 5. External post publication remains pending.
 
 ---
 
@@ -596,7 +598,7 @@ Do not spend the first month memorizing for an exam. Use the Cloud Practitioner 
 
 | Milestone | Due | Status |
 |---|---:|---|
-| 1. Safe AWS operator (Weeks 1–2) | Sep 27 | 🟨 In progress |
+| 1. Safe AWS operator (Weeks 1–2) | Sep 27 | 🟨 Technical labs passed; external post pending |
 | 2. Networking and resilient compute (Weeks 3–4) | Oct 11 | ⬜ Not started |
 | 3. Secure serverless workload (Weeks 5–7) | Nov 1 | ⬜ Not started |
 | 4. IaC, Kubernetes/EKS, and secure delivery (Weeks 8–10) | Nov 22 | ⬜ Not started |

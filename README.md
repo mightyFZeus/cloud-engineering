@@ -25,11 +25,13 @@ The course is built around roughly 10 focused hours per week. Every daily milest
 | 7 | AWS access baseline automation | Passed | [Write-up](docs/week-01/day-07-baseline-automation.md) · [Post draft](posts/week-01/day-07-baseline-automation.md) |
 | 8 | First Linux EC2 instance and cleanup | Passed | [Write-up](docs/week-02/day-08-ec2-session-manager.md) · [Post draft](posts/week-02/day-08-ec2-session-manager.md) |
 | 9 | Go health service under systemd | Passed | [Write-up](docs/week-02/day-09-go-health-systemd.md) · [Post draft](posts/week-02/day-09-go-health-systemd.md) |
+| 10 | Private S3 access through an EC2 instance role | Passed | [Write-up](docs/week-02/day-10-private-s3-instance-role.md) · [Post draft](posts/week-02/day-10-private-s3-instance-role.md) |
+| 11 | Design and validate a four-subnet VPC plan | Assigned | [Assignment](outputs/aws-daily-assignment-tracker.md#day-11--design-and-validate-a-four-subnet-vpc-plan) |
 
 ## Repository map
 
 - [`docs/week-01/`](docs/week-01/) — verified daily learning notes and command summaries.
-- [`docs/week-02/`](docs/week-02/) — EC2 and Linux operations notes.
+- [`docs/week-02/`](docs/week-02/) — EC2, Linux, S3, and Week 2 operations notes.
 - [`posts/week-01/`](posts/week-01/) — reviewed build-in-public drafts based on verified work.
 - [`posts/week-02/`](posts/week-02/) — Week 2 build-in-public drafts.
 - [`outputs/aws-cloud-engineer-12-week-plan.md`](outputs/aws-cloud-engineer-12-week-plan.md) — complete 12-week roadmap.
