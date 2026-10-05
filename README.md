@@ -28,7 +28,8 @@ The course is built around roughly 10 focused hours per week. Every daily milest
 | 10 | Private S3 access through an EC2 instance role | Passed | [Write-up](docs/week-02/day-10-private-s3-instance-role.md) · [Post draft](posts/week-02/day-10-private-s3-instance-role.md) |
 | 11 | Design and validate a four-subnet VPC plan | Passed | [Write-up](docs/week-03/day-11-vpc-cidr-validation.md) · [Lab](labs/week-03/day-11-vpc-cidr/) · [Post draft](posts/week-03/day-11-vpc-cidr-validation.md) |
 | 12 | Build and inspect a four-subnet VPC | Passed with documented CIDR exception | [Write-up](docs/week-03/day-12-four-subnet-vpc.md) · [Post draft](posts/week-03/day-12-four-subnet-vpc.md) |
-| 13 | Trace and diagnose VPC traffic paths | Assigned | [Assignment](assignments/day-13-vpc-traffic-diagnosis.md) |
+| 13 | Trace and diagnose VPC traffic paths | Passed | [Write-up](docs/week-03/day-13-vpc-traffic-diagnosis.md) · [Lab](labs/week-03/day-13-vpc-traffic-path/) · [Post draft](posts/week-03/day-13-vpc-traffic-diagnosis.md) |
+| 14 | Package the Go health service for EC2 user data | Assigned | [Assignment](assignments/day-14-ec2-user-data-go-service.md) |
 
 ## Repository map
 

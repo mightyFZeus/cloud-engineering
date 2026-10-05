@@ -69,9 +69,20 @@ Day 13 submission
 
 ## Pass criteria
 
-- [ ] The Mermaid diagram shows the required two-AZ request path and security boundaries.
-- [ ] The request and response paths correctly distinguish routing from security filtering.
-- [ ] NAT and S3 gateway endpoint paths are accurately explained.
-- [ ] The troubleshooting table contains all five required failures and evidence-based repairs.
-- [ ] Both local checks pass.
-- [ ] No AWS resources or sensitive identifiers were created or recorded.
+- [x] The Mermaid diagram shows the required two-AZ request path and security boundaries.
+- [x] The request and response paths correctly distinguish routing from security filtering.
+- [x] NAT and S3 gateway endpoint paths are accurately explained.
+- [x] The troubleshooting table contains all five required failures and evidence-based repairs.
+- [x] Both local checks pass.
+- [x] No AWS resources or sensitive identifiers were created or recorded.
+
+## Verification — October 5, 2026
+
+**Result:** Passed, 6/6 criteria.
+
+- The README contains a two-AZ Mermaid diagram with public and private subnets, an internet gateway, load-balancer nodes, private workloads, route tables, and security groups.
+- The numbered request path distinguishes route selection from stateful security-group filtering.
+- Optional NAT and S3 gateway endpoint paths are shown and correctly explained.
+- The troubleshooting table contains five required failures with symptoms, evidence, root causes, and specific repairs.
+- `test -s` and the required `rg` check both exited `0`.
+- No AWS resources or sensitive identifiers were created or recorded.
