@@ -2,7 +2,7 @@
 
 ## LinkedIn
 
-My first AWS cloud engineering milestone is technically complete: I can launch, inspect, secure, troubleshoot, and clean up a small EC2 workload using temporary credentials.
+The core technical labs for my first AWS cloud engineering milestone are complete: I can launch, inspect, secure, troubleshoot, and clean up a small EC2 workload using temporary credentials.
 
 Across the foundation labs, I configured safer account access, worked with assumed roles, narrowed IAM permissions, and automated baseline checks. I then launched Amazon Linux through Session Manager with no SSH key or inbound rule.
 

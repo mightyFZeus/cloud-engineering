@@ -111,7 +111,7 @@ Useful setup references: [IAM security best practices](https://docs.aws.amazon.c
 - [x] Week 2 runbook and learning log are committed.
 - [ ] Milestone 1 build-in-public post was drafted and published or scheduled.
 
-The Week 2 runbook, learning log, and Milestone 1 post draft were prepared on October 5. External post publication remains pending.
+The Week 2 runbook, learning log, and Milestone 1 post draft were prepared on October 5. An explicit EC2 stop exercise and external post publication remain pending.
 
 ---
 
@@ -598,7 +598,7 @@ Do not spend the first month memorizing for an exam. Use the Cloud Practitioner 
 
 | Milestone | Due | Status |
 |---|---:|---|
-| 1. Safe AWS operator (Weeks 1–2) | Sep 27 | 🟨 Technical labs passed; external post pending |
+| 1. Safe AWS operator (Weeks 1–2) | Sep 27 | 🟨 Core labs passed; stop exercise and external post pending |
 | 2. Networking and resilient compute (Weeks 3–4) | Oct 11 | ⬜ Not started |
 | 3. Secure serverless workload (Weeks 5–7) | Nov 1 | ⬜ Not started |
 | 4. IaC, Kubernetes/EKS, and secure delivery (Weeks 8–10) | Nov 22 | ⬜ Not started |
