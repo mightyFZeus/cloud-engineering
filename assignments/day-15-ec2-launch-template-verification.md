@@ -87,9 +87,21 @@ Day 15 submission
 
 ## Pass criteria
 
-- [ ] The launch template used Amazon Linux 2023, `t3.micro`, IMDSv2, the SSM instance role, no key pair, and the Day 14 user data.
-- [ ] The application security group allowed port `8080` only from the placeholder ALB security group and exposed no SSH or public inbound rule.
-- [ ] Session Manager connected and the service returned `active` and `ok` while listening on `:8080`.
-- [ ] Cloud-init completed successfully without credentials or secrets in user data.
-- [ ] No NAT gateway, Elastic IP, load balancer, target group, or Auto Scaling group was created.
-- [ ] The instance, EBS volume, launch template, and both temporary security groups were deleted.
+- [x] The launch template used Amazon Linux 2023, `t3.micro`, IMDSv2, the SSM instance role, no key pair, and the Day 14 user data.
+- [x] The application security group allowed port `8080` only from the placeholder ALB security group and exposed no SSH or public inbound rule.
+- [x] Session Manager connected and the service returned `active` and `ok` while listening on `:8080`.
+- [x] Cloud-init completed successfully without credentials or secrets in user data.
+- [x] No NAT gateway, Elastic IP, load balancer, target group, or Auto Scaling group was created.
+- [x] The instance, EBS volume, launch template, and both temporary security groups were deleted.
+
+## Verification — October 7, 2026
+
+**Result:** Passed, 6/6 criteria.
+
+- The launch template used Amazon Linux 2023 x86_64, `t3.micro`, the existing SSM instance profile, no key pair, an 8 GiB `gp3` root volume with delete-on-termination, required IMDSv2, project tags, and the Day 14 user data.
+- The application security group contained one inbound TCP `8080` rule whose source was the placeholder ALB security group. It contained no SSH or public-CIDR inbound rule.
+- The first corrected-template launch produced `cloud-init status: error` and an inactive service. The cloud-init log showed that Go could not locate a build cache because neither `GOCACHE`, `XDG_CACHE_HOME`, nor `HOME` was defined.
+- The repair explicitly set `HOME=/root`, created a root-owned build-cache directory, and set `GOCACHE` to that directory. A new launch-template version was created and used for a replacement instance.
+- On the replacement, cloud-init returned `done`, the service returned `active`, `/healthz` returned `ok`, and the socket listened on `*:8080` without service errors.
+- The failed and replacement instances were terminated. Zero Day 15 EBS volumes remained, and the launch template and both temporary security groups were deleted.
+- No NAT gateway, Elastic IP, load balancer, target group, or Auto Scaling group was created. The sensitive-data scan excluded resource identifiers and raw logs.

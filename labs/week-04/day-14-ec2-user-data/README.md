@@ -44,13 +44,14 @@ It starts after `network-online.target` and is enabled for the normal multi-user
 The user-data script:
 
 1. Enables strict Bash error handling.
-2. Installs Go through the Amazon Linux package manager.
-3. Creates the restricted `cloudeng` system user.
-4. Builds the Go application.
-5. Installs the binary under `/usr/local/bin`.
-6. Installs the service unit.
-7. Reloads `systemd`.
-8. Enables and starts the service.
+2. Defines an explicit root-owned Go build cache because cloud-init does not guarantee that `HOME` is set.
+3. Installs Go through the Amazon Linux package manager.
+4. Creates the restricted `cloudeng` system user.
+5. Builds the Go application.
+6. Installs the binary under `/usr/local/bin`.
+7. Installs the service unit.
+8. Reloads `systemd`.
+9. Enables and starts the service.
 
 ## Troubleshooting
 

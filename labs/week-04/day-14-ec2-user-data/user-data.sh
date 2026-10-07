@@ -1,6 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
+export HOME=/root
+export GOCACHE=/var/cache/cloud-eng-go-build
+install -d -o root -g root -m 0755 "$GOCACHE"
+
 dnf install -y golang
 
 if ! id cloudeng >/dev/null 2>&1; then
