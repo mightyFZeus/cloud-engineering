@@ -39,7 +39,8 @@
 | 11 | Oct 5 | Design and validate a four-subnet VPC plan | 11:00 PM | ✅ Passed Oct 5 | 6/6 criteria passed | Draft saved |
 | 12 | Oct 6 | Build and inspect a four-subnet VPC | 11:00 PM | ✅ Passed with documented exception Oct 5 | 5/6 criteria supported; exact VPC CIDR was not retained before cleanup | Draft saved |
 | 13 | Oct 7 | Trace and diagnose VPC traffic paths | 11:00 PM | ✅ Passed Oct 5 | 6/6 criteria passed | Draft saved |
-| 14 | Oct 8 | Package the Go health service for EC2 user data | 11:00 PM | ⬜ Assigned | Standalone assignment loaded | Not yet |
+| 14 | Oct 7 | Package the Go health service for EC2 user data | 11:00 PM | ✅ Passed Oct 7 | 6/6 criteria passed | Draft saved |
+| 15 | Oct 8 | Launch and verify the Go service from an EC2 launch template | 11:00 PM | ⬜ Assigned | Standalone assignment loaded | Not yet |
 
 ---
 

@@ -1,0 +1,21 @@
+[Unit]
+Description=Cloud Engineering Health Service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=cloudeng
+Group=cloudeng
+ExecStart=/usr/local/bin/cloud-eng-health
+Restart=on-failure
+RestartSec=5s
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+
+[Install]
+WantedBy=multi-user.target
+UNIT

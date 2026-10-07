@@ -1,6 +1,6 @@
 # Day 14 — Package the Go Health Service for EC2 User Data
 
-**Date:** Thursday, October 8, 2026
+**Date:** Wednesday, October 7, 2026
 
 **Due:** 11:00 PM Africa/Lagos
 
@@ -83,9 +83,27 @@ Day 14 submission
 
 ## Pass criteria
 
-- [ ] All four required files exist and contain the required configuration.
-- [ ] The health service listens on `:8080`, returns `200 ok`, and uses HTTP timeouts.
-- [ ] The service unit uses the dedicated user, restart policy, network ordering, and all four hardening settings.
-- [ ] User data uses strict Bash mode, installs dependencies, builds the binary, and enables the service without embedding secrets.
-- [ ] `gofmt`, `go test`, and `bash -n` pass; the `systemd-analyze` result or macOS limitation is recorded.
-- [ ] The README accurately explains ALB security-group scoping, logs, and secret handling.
+- [x] All four required files exist and contain the required configuration.
+- [x] The health service listens on `:8080`, returns `200 ok`, and uses HTTP timeouts.
+- [x] The service unit uses the dedicated user, restart policy, network ordering, and all four hardening settings.
+- [x] User data uses strict Bash mode, installs dependencies, builds the binary, and enables the service without embedding secrets.
+- [x] `gofmt`, `go test`, and `bash -n` pass; the `systemd-analyze` result or macOS limitation is recorded.
+- [x] The README accurately explains ALB security-group scoping, logs, and secret handling.
+
+## Verification attempt — October 7, 2026
+
+**Result:** Needs correction. Five of six criteria passed.
+
+- All four required files exist.
+- `main.go` is formatted, compiles successfully, listens on `:8080`, returns `200 ok`, and configures HTTP timeouts.
+- The service unit contains the dedicated user, restart policy, network ordering, and all four required hardening settings.
+- `user-data.sh` passes `bash -n` and contains strict mode, package installation, user creation, compilation, installation, and service enablement.
+- `systemd-analyze` is unavailable on the learner's macOS environment, which is an accepted limitation.
+- The sensitive-data scan found no credentials, account identifiers, ARNs, keys, tokens, or private console URLs.
+- **Correction required:** The README ends inside the cloud-init log command block. Add the missing service-log, health-check, and secret-handling content, then rerun the README check.
+
+## Final verification — October 7, 2026
+
+**Result:** Passed, 6/6 criteria.
+
+The README correction closed the code block and added the required `journalctl` service-log command, local health-check command, IAM instance-role guidance, and warning against secrets in user data. The README check returned `0`. The Go compile check and Bash syntax check still passed, and the final sensitive-data scan was clean.

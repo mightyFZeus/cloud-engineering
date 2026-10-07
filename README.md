@@ -29,7 +29,8 @@ The course is built around roughly 10 focused hours per week. Every daily milest
 | 11 | Design and validate a four-subnet VPC plan | Passed | [Write-up](docs/week-03/day-11-vpc-cidr-validation.md) · [Lab](labs/week-03/day-11-vpc-cidr/) · [Post draft](posts/week-03/day-11-vpc-cidr-validation.md) |
 | 12 | Build and inspect a four-subnet VPC | Passed with documented CIDR exception | [Write-up](docs/week-03/day-12-four-subnet-vpc.md) · [Post draft](posts/week-03/day-12-four-subnet-vpc.md) |
 | 13 | Trace and diagnose VPC traffic paths | Passed | [Write-up](docs/week-03/day-13-vpc-traffic-diagnosis.md) · [Lab](labs/week-03/day-13-vpc-traffic-path/) · [Post draft](posts/week-03/day-13-vpc-traffic-diagnosis.md) |
-| 14 | Package the Go health service for EC2 user data | Assigned | [Assignment](assignments/day-14-ec2-user-data-go-service.md) |
+| 14 | Package the Go health service for EC2 user data | Passed | [Write-up](docs/week-04/day-14-ec2-user-data-go-service.md) · [Lab](labs/week-04/day-14-ec2-user-data/) · [Post draft](posts/week-04/day-14-ec2-user-data-go-service.md) |
+| 15 | Launch and verify the Go service from an EC2 launch template | Assigned | [Assignment](assignments/day-15-ec2-launch-template-verification.md) |
 
 ## Repository map
 
@@ -39,6 +40,7 @@ The course is built around roughly 10 focused hours per week. Every daily milest
 - [`posts/week-01/`](posts/week-01/) — reviewed build-in-public drafts based on verified work.
 - [`posts/week-02/`](posts/week-02/) — Week 2 build-in-public drafts.
 - [`posts/week-03/`](posts/week-03/) — Week 3 build-in-public drafts.
+- [`posts/week-04/`](posts/week-04/) — Week 4 compute and availability build-in-public drafts.
 - [`outputs/aws-cloud-engineer-12-week-plan.md`](outputs/aws-cloud-engineer-12-week-plan.md) — complete 12-week roadmap.
 - [`outputs/aws-daily-assignment-tracker.md`](outputs/aws-daily-assignment-tracker.md) — assignment evidence and pass criteria.
 - [`outputs/aws-learning-log-template.md`](outputs/aws-learning-log-template.md) — reusable learning-log format.

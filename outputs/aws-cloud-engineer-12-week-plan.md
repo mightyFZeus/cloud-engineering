@@ -159,7 +159,7 @@ The Week 2 runbook, learning log, and Milestone 1 post draft were prepared on Oc
 
 ### Build (6h)
 
-- Package the Week 2 Go health service with user data or an AMI/launch template.
+- [x] Package the Week 2 Go health service with user data or an AMI/launch template.
 - Deploy two instances across two AZs behind an ALB and an Auto Scaling group.
 - Verify health checks, terminate one instance, and observe replacement/recovery.
 - Change a health-check path or security-group rule to create a failure, then repair it.
