@@ -41,7 +41,8 @@
 | 13 | Oct 7 | Trace and diagnose VPC traffic paths | 11:00 PM | ✅ Passed Oct 5 | 6/6 criteria passed | Draft saved |
 | 14 | Oct 7 | Package the Go health service for EC2 user data | 11:00 PM | ✅ Passed Oct 7 | 6/6 criteria passed | Draft saved |
 | 15 | Oct 8 | Launch and verify the Go service from an EC2 launch template | 11:00 PM | ✅ Passed Oct 7 | 6/6 criteria passed after evidence-based cloud-init repair | Draft saved |
-| 16 | Oct 9 | Deploy the Go service behind an ALB and Auto Scaling group | 11:00 PM | ⬜ Assigned | Standalone assignment loaded | Not yet |
+| 16 | Oct 13 | Deploy the Go service behind an ALB and Auto Scaling group | 11:00 PM | ✅ Passed | 6/6; replacement, health response, cost check, and full cleanup verified | Draft delivered |
+| 17 | Oct 13 | Diagnose and repair an application health-check failure | 11:00 PM | Assigned | Local Go failure lab; no AWS resources | Not yet |
 
 ---
 
@@ -1394,3 +1395,32 @@ Day 12 submission
 - **Cleanup:** The VPC, four subnets, custom route tables, and internet gateway were deleted.
 - **Documented exception:** The submitted VPC CIDR and subnet CIDRs conflicted. The exact VPC CIDR was not retained before deletion, so the required `10.20.0.0/16` with four `/24` subnets cannot be verified. The recorded `/20` subnets were under `10.0.0.0/16`.
 - **Sensitive-data handling:** The submitted resource identifier and console link were excluded from saved and publishable documentation.
+
+## Day 16 verification — October 13
+
+
+
+- Region eu-west-1; budget and launch estimate confirmed checked.
+- Internet-facing IPv4 ALB across eu-west-1a and eu-west-1b; HTTP 80 forwarded to an instance target group on HTTP 8080, health path /healthz.
+- ALB inbound HTTP restricted to the learner's current address; application inbound 8080 restricted to the ALB security group, no SSH.
+- Launch template: Amazon Linux 2023 x86_64, t3.micro, AWSLearningEC2SSMRole, no key pair, IMDSv2 required, 8 GiB gp3 delete on termination, Project tags on instances and volumes, corrected user data.
+- Auto Scaling desired/minimum/maximum 2/2/2, ELB checks enabled, 300-second grace period.
+- Two InService instances and two healthy targets; direct HTTP curl returned ok.
+- Deliberate termination followed by replacement restored two InService instances, two healthy targets, and ok.
+
+## Explanation and troubleshooting
+
+Auto Scaling observes EC2 state and health and restores desired capacity using the launch template. ALB health checks send HTTP requests to /healthz to assess application readiness. With ELB checks enabled, Auto Scaling can also use unhealthy target reports to replace instances; this lab directly demonstrated termination recovery, not application-failure replacement.
+
+A browser timed out while a direct HTTP request with curl succeeded. The browser-specific root cause was not established. No configuration change was proven to fix it.
+
+Safe command summary: curl with an HTTP health endpoint, connection timeout, overall timeout, and proxy bypass. The actual deployment address and raw output are omitted.
+
+## Cleanup
+
+All lab instances terminated; ASG, ALB, target group, launch template, and both security groups deleted. Zero Day 16 EBS volumes remain. No NAT gateways or Elastic IPs created.
+
+## References
+
+- https://docs.aws.amazon.com/autoscaling/ec2/userguide/health-checks-overview.html
+- https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html

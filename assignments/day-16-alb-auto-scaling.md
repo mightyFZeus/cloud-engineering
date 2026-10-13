@@ -1,6 +1,8 @@
 # Day 16 — Deploy the Go Service Behind an ALB and Auto Scaling Group
 
-**Date:** Friday, October 9, 2026
+**Date:** Tuesday, October 13, 2026
+
+**Status:** Passed October 13, 2026. All six pass criteria verified; cleanup complete.
 
 **Due:** 11:00 PM Africa/Lagos
 
@@ -94,9 +96,9 @@ Day 16 submission
 
 ## Pass criteria
 
-- [ ] The ALB spanned two Availability Zones and accepted HTTP only from the learner's current address.
-- [ ] The application security group accepted port `8080` only from the ALB security group.
-- [ ] The Auto Scaling group maintained two instances across two subnets and registered them with the target group.
-- [ ] Two targets became healthy and the ALB returned `ok` from `/healthz`.
-- [ ] Terminating one instance caused Auto Scaling to create a replacement that became healthy.
-- [ ] All paid and temporary Day 16 resources were deleted, with zero remaining EBS volumes and no NAT gateway or Elastic IP created.
+- [x] The ALB spanned two Availability Zones and accepted HTTP only from the learner's current address.
+- [x] The application security group accepted port `8080` only from the ALB security group.
+- [x] The Auto Scaling group maintained two instances across two subnets and registered them with the target group.
+- [x] Two targets became healthy and the ALB returned `ok` from `/healthz`.
+- [x] Terminating one instance caused Auto Scaling to create a replacement that became healthy.
+- [x] All paid and temporary Day 16 resources were deleted, with zero remaining EBS volumes and no NAT gateway or Elastic IP created.

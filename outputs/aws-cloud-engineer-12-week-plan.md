@@ -160,10 +160,10 @@ The Week 2 runbook, learning log, and Milestone 1 post draft were prepared on Oc
 ### Build (6h)
 
 - [x] Package the Week 2 Go health service with user data or an AMI/launch template.
-- Deploy two instances across two AZs behind an ALB and an Auto Scaling group.
-- Verify health checks, terminate one instance, and observe replacement/recovery.
+- [x] Deploy two instances across two AZs behind an ALB and an Auto Scaling group.
+- [x] Verify health checks, terminate one instance, and observe replacement/recovery.
 - Change a health-check path or security-group rule to create a failure, then repair it.
-- Destroy the ALB, Auto Scaling group, instances, and any NAT gateways the same day.
+- [x] Destroy the ALB, Auto Scaling group, instances, and any NAT gateways the same day.
 
 ### Document and test (2h)
 
@@ -172,11 +172,11 @@ The Week 2 runbook, learning log, and Milestone 1 post draft were prepared on Oc
 
 ### Done checklist — Milestone 2: networking and resilient compute
 
-- [ ] The service ran behind an ALB in two AZs.
-- [ ] A terminated instance was automatically replaced.
+- [x] The service ran behind an ALB in two AZs.
+- [x] A terminated instance was automatically replaced.
 - [ ] I can trace a request through DNS/ALB/security groups/routes/instance/port.
 - [ ] A failure table and architecture diagram are committed.
-- [ ] All paid lab resources were destroyed.
+- [x] All paid lab resources were destroyed.
 - [ ] Milestone 2 build-in-public post was drafted and published or scheduled.
 
 ---
@@ -599,7 +599,7 @@ Do not spend the first month memorizing for an exam. Use the Cloud Practitioner 
 | Milestone | Due | Status |
 |---|---:|---|
 | 1. Safe AWS operator (Weeks 1–2) | Sep 27 | 🟨 Core labs passed; stop exercise and external post pending |
-| 2. Networking and resilient compute (Weeks 3–4) | Oct 11 | 🟨 In progress |
+| 2. Networking and resilient compute (Weeks 3–4) | Oct 11 | 🟨 Day 16 ALB/replacement/cleanup passed Oct 13; failure diagnosis and retrospective pending |
 | 3. Secure serverless workload (Weeks 5–7) | Nov 1 | ⬜ Not started |
 | 4. IaC, Kubernetes/EKS, and secure delivery (Weeks 8–10) | Nov 22 | ⬜ Not started |
 | 5. Operable, portfolio-ready capstone (Weeks 11–12) | Dec 6 | ⬜ Not started |

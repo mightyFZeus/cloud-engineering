@@ -31,7 +31,8 @@ The course is built around roughly 10 focused hours per week. Every daily milest
 | 13 | Trace and diagnose VPC traffic paths | Passed | [Write-up](docs/week-03/day-13-vpc-traffic-diagnosis.md) · [Lab](labs/week-03/day-13-vpc-traffic-path/) · [Post draft](posts/week-03/day-13-vpc-traffic-diagnosis.md) |
 | 14 | Package the Go health service for EC2 user data | Passed | [Write-up](docs/week-04/day-14-ec2-user-data-go-service.md) · [Lab](labs/week-04/day-14-ec2-user-data/) · [Post draft](posts/week-04/day-14-ec2-user-data-go-service.md) |
 | 15 | Launch and verify the Go service from an EC2 launch template | Passed | [Write-up](docs/week-04/day-15-ec2-launch-template-verification.md) · [Post draft](posts/week-04/day-15-ec2-launch-template-verification.md) |
-| 16 | Deploy the Go service behind an ALB and Auto Scaling group | Assigned | [Assignment](assignments/day-16-alb-auto-scaling.md) |
+| 16 | Deploy the Go service behind an ALB and Auto Scaling group | Passed | [Write-up](docs/week-04/day-16-alb-auto-scaling.md) · [Post draft](posts/week-04/day-16-alb-auto-scaling.md) |
+| 17 | Diagnose and repair an application health-check failure | Assigned | [Assignment](assignments/day-17-health-check-failure.md) |
 
 ## Repository map
 
