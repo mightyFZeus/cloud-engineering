@@ -174,10 +174,10 @@ The Week 2 runbook, learning log, and Milestone 1 post draft were prepared on Oc
 
 - [x] The service ran behind an ALB in two AZs.
 - [x] A terminated instance was automatically replaced.
-- [ ] I can trace a request through DNS/ALB/security groups/routes/instance/port.
-- [ ] A failure table and architecture diagram are committed.
+- [x] I can trace a request through DNS/ALB/security groups/routes/instance/port.
+- [x] A failure table and architecture diagram are committed.
 - [x] All paid lab resources were destroyed.
-- [ ] Milestone 2 build-in-public post was drafted and published or scheduled.
+- [ ] Milestone 2 build-in-public post was drafted and published or scheduled. Retrospective drafted October 14 and saved to the repository; external publication/scheduling remains unverified.
 
 ---
 
@@ -599,7 +599,7 @@ Do not spend the first month memorizing for an exam. Use the Cloud Practitioner 
 | Milestone | Due | Status |
 |---|---:|---|
 | 1. Safe AWS operator (Weeks 1–2) | Sep 27 | 🟨 Core labs passed; stop exercise and external post pending |
-| 2. Networking and resilient compute (Weeks 3–4) | Oct 11 | 🟨 Days 16–17 deployment, replacement, local probe diagnosis, and cleanup passed; consolidated runbook/AZ analysis and retrospective pending |
+| 2. Networking and resilient compute (Weeks 3–4) | Oct 11 | 🟨 🟩 Core labs and runbook passed through Day 18; retrospective drafted; external social publication pending |
 | 3. Secure serverless workload (Weeks 5–7) | Nov 1 | ⬜ Not started |
 | 4. IaC, Kubernetes/EKS, and secure delivery (Weeks 8–10) | Nov 22 | ⬜ Not started |
 | 5. Operable, portfolio-ready capstone (Weeks 11–12) | Dec 6 | ⬜ Not started |

@@ -33,7 +33,8 @@ The course is built around roughly 10 focused hours per week. Every daily milest
 | 15 | Launch and verify the Go service from an EC2 launch template | Passed | [Write-up](docs/week-04/day-15-ec2-launch-template-verification.md) · [Post draft](posts/week-04/day-15-ec2-launch-template-verification.md) |
 | 16 | Deploy the Go service behind an ALB and Auto Scaling group | Passed | [Write-up](docs/week-04/day-16-alb-auto-scaling.md) · [Post draft](posts/week-04/day-16-alb-auto-scaling.md) |
 | 17 | Diagnose and repair an application health-check failure | Passed | [Write-up](docs/week-04/day-17-health-check-failure.md) · [Post draft](posts/week-04/day-17-health-check-failure.md) |
-| 18 | Consolidate the resilient compute runbook | Assigned | [Assignment](assignments/day-18-resilient-compute-runbook.md) |
+| 18 | Consolidate the resilient compute runbook | Passed | [Write-up](docs/week-04/day-18-resilient-compute-runbook.md) · [Runbook](labs/week-04/day-18-resilient-compute-runbook/README.md) · [Posts](posts/week-04/day-18-resilient-compute-runbook.md) |
+| 19 | Simulate least-privilege S3 prefix access | Assigned | [Assignment](assignments/day-19-iam-prefix-simulation.md) |
 
 ## Repository map
 

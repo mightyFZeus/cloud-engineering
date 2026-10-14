@@ -43,7 +43,8 @@
 | 15 | Oct 8 | Launch and verify the Go service from an EC2 launch template | 11:00 PM | ✅ Passed Oct 7 | 6/6 criteria passed after evidence-based cloud-init repair | Draft saved |
 | 16 | Oct 13 | Deploy the Go service behind an ALB and Auto Scaling group | 11:00 PM | ✅ Passed | 6/6; replacement, health response, cost check, and full cleanup verified | Draft delivered |
 | 17 | Oct 14 | Diagnose and repair an application health-check failure | 11:00 PM | ✅ Passed | 6/6; local 200/404/200, explanation, five-row table, and cleanup verified | Draft delivered |
-| 18 | Oct 14 | Consolidate the resilient compute runbook | 11:00 PM | Assigned | Local documentation; no AWS resources required | Not yet |
+| 18 | Oct 14 | Consolidate the resilient compute runbook | 11:00 PM | ✅ Passed | 6/6; runbook content and links reviewed; no AWS resources | Daily and milestone drafts delivered |
+| 19 | Oct 14 | Simulate least-privilege S3 prefix access | 11:00 PM | Assigned | Custom policy simulation; no bucket or role creation | Not yet |
 
 ---
 
@@ -1443,6 +1444,25 @@ All lab instances terminated; ASG, ALB, target group, launch template, and both 
 The HTTP path failure and repair were tested locally with curl. The table's other scenarios are analysis, not new AWS experiments. Day 16 separately verified actual instance termination and replacement. No ALB application-failure replacement was tested on Day 17.
 
 Commands used: go run for the existing service, curl to inspect status/body, lsof to check the listener, Ctrl+C to stop the service, and test -s to check the README.
+
+## References
+
+- [ALB health checks](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html)
+- [Auto Scaling health checks](https://docs.aws.amazon.com/autoscaling/ec2/userguide/health-checks-overview.html)
+
+## Day 18 verification — October 14
+
+Passed October 14, 2026: six criteria verified by reading the saved runbook and reviewing the learner checkpoints.
+
+- Two-AZ public-subnet topology accurately documents the actual Day 16 lab, ALB listener, target port, health checks, security groups, IAM role, and replacement control.
+- Seven-sentence request/response explanation is correct; learner explained backend port 8080 accepts only the ALB security group.
+- Six failure rows distinguish symptoms, evidence, detection, recovery, and repair. The AZ row explicitly limits recovery by capacity and configuration.
+- Ordered checklist proceeds from client reachability to backend process, probe, and startup evidence.
+- Tested instance replacement and local probe results are separated from untested outage/dependency scenarios; browser timeout root cause remains unknown.
+- Nonempty README check exited 0; no new AWS resources created; prior Day 16 cleanup remains confirmed.
+- Coach corrected two relative evidence links; all three links now resolve locally.
+
+See the [runbook](../../labs/week-04/day-18-resilient-compute-runbook/README.md).
 
 ## References
 
