@@ -42,7 +42,8 @@
 | 14 | Oct 7 | Package the Go health service for EC2 user data | 11:00 PM | ✅ Passed Oct 7 | 6/6 criteria passed | Draft saved |
 | 15 | Oct 8 | Launch and verify the Go service from an EC2 launch template | 11:00 PM | ✅ Passed Oct 7 | 6/6 criteria passed after evidence-based cloud-init repair | Draft saved |
 | 16 | Oct 13 | Deploy the Go service behind an ALB and Auto Scaling group | 11:00 PM | ✅ Passed | 6/6; replacement, health response, cost check, and full cleanup verified | Draft delivered |
-| 17 | Oct 13 | Diagnose and repair an application health-check failure | 11:00 PM | Assigned | Local Go failure lab; no AWS resources | Not yet |
+| 17 | Oct 14 | Diagnose and repair an application health-check failure | 11:00 PM | ✅ Passed | 6/6; local 200/404/200, explanation, five-row table, and cleanup verified | Draft delivered |
+| 18 | Oct 14 | Consolidate the resilient compute runbook | 11:00 PM | Assigned | Local documentation; no AWS resources required | Not yet |
 
 ---
 
@@ -1424,3 +1425,26 @@ All lab instances terminated; ASG, ALB, target group, launch template, and both 
 
 - https://docs.aws.amazon.com/autoscaling/ec2/userguide/health-checks-overview.html
 - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html
+
+## Day 17 verification — October 14
+
+
+
+- Go service started locally on :8080.
+- /healthz returned HTTP 200 and ok.
+- /wrong-healthz returned HTTP 404 while /healthz still returned ok and the process remained running.
+- Correcting the requested path returned HTTP 200 and ok again; no code change was needed.
+- Five failure-table rows documented termination, incorrect probe path, blocked backend port, failed deployment, and unavailable database.
+- Learner explanation: replacement instances face the same wrong health-check path; repair the path instead.
+- Service stopped, port 8080 released, README nonempty check exited 0, no AWS resources created.
+
+## Scope and command summary
+
+The HTTP path failure and repair were tested locally with curl. The table's other scenarios are analysis, not new AWS experiments. Day 16 separately verified actual instance termination and replacement. No ALB application-failure replacement was tested on Day 17.
+
+Commands used: go run for the existing service, curl to inspect status/body, lsof to check the listener, Ctrl+C to stop the service, and test -s to check the README.
+
+## References
+
+- [ALB health checks](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html)
+- [Auto Scaling health checks](https://docs.aws.amazon.com/autoscaling/ec2/userguide/health-checks-overview.html)

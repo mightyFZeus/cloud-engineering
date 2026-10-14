@@ -1,9 +1,9 @@
 # Day 17 — Diagnose and Repair an Application Health-Check Failure
 
-**Date:** October 13, 2026
+**Date:** October 14, 2026
 **Due:** 11:00 PM Africa/Lagos
 **Timebox:** 60–75 minutes
-**Status:** Assigned
+**Status:** Passed October 14, 2026 — all six criteria verified.
 
 ## Outcome
 
