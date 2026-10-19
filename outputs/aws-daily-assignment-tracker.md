@@ -46,7 +46,8 @@
 | 18 | Oct 14 | Consolidate the resilient compute runbook | 11:00 PM | ✅ Passed | 6/6; runbook content and links reviewed; no AWS resources | Daily and milestone drafts delivered |
 | 19 | Oct 19 | Simulate least-privilege S3 prefix access | 11:00 PM | ✅ Passed | 6/6; five simulator decisions, resource/context scope, explanations, and no-resource confirmation | Draft delivered |
 | 20 | Oct 19 | Read a non-secret parameter with the Go AWS SDK | 11:00 PM | ✅ Passed | 6/6; SDK read, typed errors, deletion, source logout, and explanations verified | Draft delivered |
-| 21 | Oct 19 | Audit Parameter Store activity in CloudTrail | 11:00 PM | Assigned | Read-only Event history review; no new AWS resources | Not yet |
+| 21 | Oct 19 | Audit Parameter Store activity in CloudTrail | 11:00 PM | ✅ Passed | 6/6; two matched events, safe timeline, explanations, and read-only scope verified | Draft delivered |
+| 22 | Oct 19 | Diagnose an explicit IAM deny in simulation | 11:00 PM | Assigned | Custom simulator; no real policies attached or resources created | Not yet |
 
 ---
 
@@ -1538,3 +1539,32 @@ Command summary: aws login; authentication check with identity output discarded;
 
 - [Go SDK configuration and credentials](https://docs.aws.amazon.com/sdk-for-go/v2/developer-guide/configure-gosdk.html)
 - [Working with Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-working-with.html)
+
+## Day 21 verification — October 19
+
+Passed October 19, 2026: six criteria verified by learner event-field checkpoints and inspection of the saved audit README.
+
+## Verified evidence
+
+- Regional CloudTrail Event history in eu-west-1 covering October 19.
+- Both events privately matched to the Day 20 parameter using requestParameters.name.
+- PutParameter: 2026-10-19T19:49:15Z; ssm.amazonaws.com; eu-west-1; IAMUser; readOnly=false; no error code.
+- DeleteParameter: 2026-10-19T20:08:57Z; ssm.amazonaws.com; eu-west-1; IAMUser; readOnly=false; no error code.
+- UTC-to-Lagos conversion adds one hour: creation 20:49:15 and deletion 21:08:57. Elapsed interval verified as 19 minutes 42 seconds.
+- Learner distinguished API audit evidence from Go's application checks and identified delivery delay as one reason an event may be missing.
+- README check exited 0; no new resources, trail, Lake store, or logging changes. Day 20 parameter remains deleted.
+
+## Review and limitations
+
+Coach removed an identical duplicate timeline section caused by repeated appending. The relative Day 20 evidence link resolves. Raw event JSON was not copied into the repository.
+
+Event history covers recorded management events for the selected Region over the past 90 days. It is not a complete application log or data-event archive. Missing events need investigation of Region, filters, time range, coverage, and delay. AWS does not record ParameterNotFound exceptions from GetParameter or DeleteParameter in CloudTrail.
+
+## Artifact
+
+[Sanitized audit timeline](../../labs/week-05/day-21-cloudtrail-audit/README.md)
+
+## References
+
+- [CloudTrail Event history](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/view-cloudtrail-events.html)
+- [Systems Manager CloudTrail integration](https://docs.aws.amazon.com/systems-manager/latest/userguide/monitoring-cloudtrail-logs.html)

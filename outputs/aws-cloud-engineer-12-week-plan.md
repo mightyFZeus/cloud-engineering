@@ -196,7 +196,7 @@ The Week 2 runbook, learning log, and Milestone 1 post draft were prepared on Oc
 - Create a role that can read only one prefix in one S3 bucket; test allowed and denied actions.
 - Use a Go program with [AWS SDK for Go v2](https://docs.aws.amazon.com/sdk-for-go/) to call S3 or DynamoDB with the active role/profile.
 - [x] Store one non-secret setting in Parameter Store — Day 20 Go read and deletion verified. Secrets Manager was not used.
-- Find your API actions in CloudTrail event history.
+- [x] Find your API actions in CloudTrail event history — Day 21 PutParameter/DeleteParameter matched.
 - Run IAM policy validation/Access Analyzer where available and reduce an over-broad policy.
 
 ### Document and test (2h)
@@ -208,7 +208,7 @@ The Week 2 runbook, learning log, and Milestone 1 post draft were prepared on Oc
 
 - [x] One least-privilege policy permits an intended action and blocks an unintended one — verified in isolated simulation on Day 19; live authorization remains to be tested.
 - [x] My Go code uses the default credential chain, not hard-coded keys.
-- [ ] I found a lab action in CloudTrail.
+- [x] I found a lab action in CloudTrail.
 - [ ] Threat model and IAM failure analysis are committed.
 
 ---
@@ -600,7 +600,7 @@ Do not spend the first month memorizing for an exam. Use the Cloud Practitioner 
 |---|---:|---|
 | 1. Safe AWS operator (Weeks 1–2) | Sep 27 | 🟨 Core labs passed; stop exercise and external post pending |
 | 2. Networking and resilient compute (Weeks 3–4) | Oct 11 | 🟨 🟩 Core labs and runbook passed through Day 18; retrospective drafted; external social publication pending |
-| 3. Secure serverless workload (Weeks 5–7) | Nov 1 | 🟨 Days 19–20 IAM simulation and live SSM SDK read/cleanup passed; live least-privilege authorization, audit, and workload labs pending |
+| 3. Secure serverless workload (Weeks 5–7) | Nov 1 | 🟨 Days 19–21 IAM simulation, SSM SDK read/cleanup, and CloudTrail audit passed; live least-privilege authorization, threat analysis, and workload labs pending |
 | 4. IaC, Kubernetes/EKS, and secure delivery (Weeks 8–10) | Nov 22 | ⬜ Not started |
 | 5. Operable, portfolio-ready capstone (Weeks 11–12) | Dec 6 | ⬜ Not started |
 
