@@ -44,7 +44,8 @@
 | 16 | Oct 13 | Deploy the Go service behind an ALB and Auto Scaling group | 11:00 PM | ✅ Passed | 6/6; replacement, health response, cost check, and full cleanup verified | Draft delivered |
 | 17 | Oct 14 | Diagnose and repair an application health-check failure | 11:00 PM | ✅ Passed | 6/6; local 200/404/200, explanation, five-row table, and cleanup verified | Draft delivered |
 | 18 | Oct 14 | Consolidate the resilient compute runbook | 11:00 PM | ✅ Passed | 6/6; runbook content and links reviewed; no AWS resources | Daily and milestone drafts delivered |
-| 19 | Oct 14 | Simulate least-privilege S3 prefix access | 11:00 PM | Assigned | Custom policy simulation; no bucket or role creation | Not yet |
+| 19 | Oct 19 | Simulate least-privilege S3 prefix access | 11:00 PM | ✅ Passed | 6/6; five simulator decisions, resource/context scope, explanations, and no-resource confirmation | Draft delivered |
+| 20 | Oct 19 | Read a non-secret parameter with the Go AWS SDK | 11:00 PM | Assigned | Temporary Standard String parameter; Go default credential chain; cleanup required | Not yet |
 
 ---
 
@@ -1468,3 +1469,39 @@ See the [runbook](../../labs/week-04/day-18-resilient-compute-runbook/README.md)
 
 - [ALB health checks](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html)
 - [Auto Scaling health checks](https://docs.aws.amazon.com/autoscaling/ec2/userguide/health-checks-overview.html)
+
+## Day 19 verification — October 19
+
+Passed October 19, 2026: six assignment criteria verified through saved policy/README review, console screenshot evidence, and learner checkpoints.
+
+## Verified evidence
+
+- JSON syntax and README checks exited 0. Coach parsed the saved JSON and checked its exact action, resource, and prefix condition scope.
+- Only the custom identity policy was selected; no permissions boundary supplied.
+- GetObject reports/sample.txt: allowed.
+- GetObject private/sample.txt: implicit deny.
+- PutObject reports/sample.txt: implicit deny.
+- ListBucket with explicit String context s3:prefix=reports/: allowed.
+- ListBucket with explicit String context s3:prefix=private/: implicit deny.
+- Learner explained that the policy grants reading reports but no upload permission.
+- No policy attached to a real identity; no AWS resources created.
+
+## Interpretation
+
+GetObject uses an object resource restricted to reports/*. ListBucket uses the bucket resource plus a prefix condition. With only this policy supplied, requests without a matching allow are implicitly denied; this policy contains no explicit deny.
+
+The initial GetObject simulation used the wildcard resource and returned implicit deny. Correcting the simulation input to the fictional reports object returned allow. The policy was not broadened.
+
+Simulation does not issue real S3 operations or prove live access. Other policies, organization controls, boundaries, resource policies, and service context can affect real requests.
+
+## Artifacts and safe commands
+
+- [Policy](../../labs/week-05/day-19-iam-prefix-simulation/policy.json)
+- [Results and explanation](../../labs/week-05/day-19-iam-prefix-simulation/README.md)
+- Commands: python3 -m json.tool for local JSON syntax, test -s for README presence; console Custom mode for simulated authorization. No raw console output or real identifiers retained.
+
+## References
+
+- [IAM policy simulator](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_testing-policies.html)
+- [How to simulate policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/policies_policy-simulator-how-to.html)
+- [S3 policy conditions](https://docs.aws.amazon.com/AmazonS3/latest/userguide/amazon-s3-policy-keys.html)

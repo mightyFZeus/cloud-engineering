@@ -1,9 +1,9 @@
 # Day 19 — Simulate Least-Privilege S3 Prefix Access
 
-**Date:** October 14, 2026
+**Date:** October 19, 2026
 **Due:** 11:00 PM Africa/Lagos
 **Timebox:** 60–75 minutes
-**Status:** Assigned
+**Status:** Passed October 19, 2026 — all six criteria verified.
 
 ## Outcome
 
