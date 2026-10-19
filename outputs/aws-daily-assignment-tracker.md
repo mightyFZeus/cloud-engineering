@@ -45,7 +45,8 @@
 | 17 | Oct 14 | Diagnose and repair an application health-check failure | 11:00 PM | ✅ Passed | 6/6; local 200/404/200, explanation, five-row table, and cleanup verified | Draft delivered |
 | 18 | Oct 14 | Consolidate the resilient compute runbook | 11:00 PM | ✅ Passed | 6/6; runbook content and links reviewed; no AWS resources | Daily and milestone drafts delivered |
 | 19 | Oct 19 | Simulate least-privilege S3 prefix access | 11:00 PM | ✅ Passed | 6/6; five simulator decisions, resource/context scope, explanations, and no-resource confirmation | Draft delivered |
-| 20 | Oct 19 | Read a non-secret parameter with the Go AWS SDK | 11:00 PM | Assigned | Temporary Standard String parameter; Go default credential chain; cleanup required | Not yet |
+| 20 | Oct 19 | Read a non-secret parameter with the Go AWS SDK | 11:00 PM | ✅ Passed | 6/6; SDK read, typed errors, deletion, source logout, and explanations verified | Draft delivered |
+| 21 | Oct 19 | Audit Parameter Store activity in CloudTrail | 11:00 PM | Assigned | Read-only Event history review; no new AWS resources | Not yet |
 
 ---
 
@@ -1505,3 +1506,35 @@ Simulation does not issue real S3 operations or prove live access. Other policie
 - [IAM policy simulator](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_testing-policies.html)
 - [How to simulate policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/policies_policy-simulator-how-to.html)
 - [S3 policy conditions](https://docs.aws.amazon.com/AmazonS3/latest/userguide/amazon-s3-policy-keys.html)
+
+## Day 20 verification — October 19
+
+Passed October 19, 2026: six assignment criteria verified from learner checkpoints and review of the saved source, module files, and README.
+
+## Verified evidence
+
+- Region eu-west-1 and budget check confirmed. Existing aws-learning profile authenticated with aws login; authentication check exited 0.
+- One Standard String parameter /cloud-eng/day20/environment created with non-secret value learning.
+- AWS SDK for Go v2 config.LoadDefaultConfig, explicit Region, 15-second context timeout, and ssm.GetParameter used without static credentials. Environment credential overrides cleared in a subshell for Go runs.
+- gofmt completed; build exited 0. Nonempty main.go, go.mod, go.sum, and README reviewed.
+- Successful read printed parameter check: PASS with exit 0.
+- Deliberately absent name returned typed ParameterNotFound with exit 1.
+- DeleteParameter exited 0. A post-delete Go read returned ParameterNotFound with exit 1.
+- README check and source-session logout exited 0. No long-term keys or EC2 instances created.
+
+## Explanation and limits
+
+Temporary credentials establish the authenticated identity; IAM policy evaluation governs access. The non-secret value learning can use String. SecureString with KMS encryption was explained for secret handling but was not deployed or tested. This lab exercised successful live SSM access, not a live test of Day 19's S3 policy.
+
+A sign-in endpoint connectivity error occurred during cleanup. A diagnostic request later returned HTTP 405 and the delete retry succeeded. The 405 established endpoint reachability, not token validity; the initial connectivity cause was not established.
+
+## Safe commands and artifacts
+
+Command summary: aws login; authentication check with identity output discarded; go mod init/go get/go mod tidy; gofmt/go build; profile-selected local Go runs; scoped aws ssm delete-parameter; aws logout. No raw AWS response, credential cache, real ARN, account ID, or login URL is saved.
+
+[Lab source and evidence](../../labs/week-05/day-20-go-parameter-store/README.md)
+
+## References
+
+- [Go SDK configuration and credentials](https://docs.aws.amazon.com/sdk-for-go/v2/developer-guide/configure-gosdk.html)
+- [Working with Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-working-with.html)
