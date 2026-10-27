@@ -49,7 +49,8 @@
 | 21 | Oct 19 | Audit Parameter Store activity in CloudTrail | 11:00 PM | ✅ Passed | 6/6; two matched events, safe timeline, explanations, and read-only scope verified | Draft delivered |
 | 22 | Oct 27 (from Oct 19) | Diagnose an explicit IAM deny in simulation | 11:00 PM | ✅ Passed Oct 27 | 6/6; exact policy comparison, four reported decisions, matched deny, explanations, three risk/control pairs, and no-change confirmation | Draft delivered |
 | 23 | Oct 28 due; passed Oct 27 | Validate and narrow an IAM policy | Oct 28, 11:00 PM | ✅ Passed Oct 27 | 6/6; three controlled JSON variants, actual AWS findings, scope reduction, corrected explanations, and cleanup verified | Draft delivered |
-| 24 | Oct 28 (loaded Oct 27) | Test live least-privilege Parameter Store access | Oct 28, 11:00 PM | ⬜ Assigned | Temporary CLI role; one allowed and one denied existing parameter; no submission yet | Not yet |
+| 24 | Oct 28 due; passed Oct 27 | Test live least-privilege Parameter Store access | Oct 28, 11:00 PM | ✅ Passed Oct 27 | 6/6; live role identity/allow/deny, exact redacted policy, Go-confirmed deletion, console role cleanup, profile removal, and logout verified | Draft delivered |
+| 25 | Oct 28 (loaded Oct 27) | Design DynamoDB keys and read jobs with Go | Oct 28, 11:00 PM | ⬜ Assigned | Week 6; one short-lived table, three fictional items, GetItem and Query; no submission yet | Not yet |
 
 ---
 
@@ -1615,3 +1616,29 @@ No live S3 access or complete least-privilege guarantee is claimed. The Week 5 v
 - [Verified note](../docs/week-05/day-23-iam-policy-validation.md)
 - [Lab evidence](../labs/week-05/day-23-iam-policy-validation/README.md)
 - [Social posts](../posts/week-05/day-23-iam-policy-validation.md)
+
+## Day 24 verification — October 27
+
+Passed October 27, 2026, ahead of the original October 28 due date: six criteria supported by learner-reported live requests, code/template inspection, explanations, and cleanup evidence. The coach did not execute AWS requests or inspect private AWS configuration.
+
+### Verified evidence
+
+- eu-west-1 and budget confirmed. Two Standard String parameters contained learning. Source aws-learning reads of both names matched the expected value with exit 0.
+- Temporary role trusted the source IAM user. No managed policies; one inline ssm:GetParameter Allow on the exact allowed resource. Saved JSON is precisely the redacted intended template.
+- Role identity suffix comparison=True, exit 0. Role read of allowed name=True, exit 0. Role read of the other known existing name=AccessDeniedException, exit 254.
+- Learner distinguished trust from permissions, source permissions from role permissions, and AccessDenied from ParameterNotFound.
+- Parameters deleted through console. CLI absence checks failed with SSM EndpointConnectionError/255; curl HTTP400/exit0 showed an HTTP response only. The reviewed Day 20 Go reader then returned typed ParameterNotFound/exit1 for both names under the source profile and eu-west-1.
+- Role deletion and absence confirmed in refreshed IAM; inline policy removed with console deletion. Exact temporary local profile block removed; source logout exit 0. No global cache deletion or universal STS revocation claimed.
+- Redacted JSON and README checks=0; saved content reviewed. No long-term access keys or additional AWS resources created.
+
+### Interpretation and limitations
+
+Live scoped SSM GetParameter authorization is demonstrated for the tested caller/resources/context. Live S3 prefix authorization and the rest of the workload roadmap remain pending. The CLI connection failure's root cause and repair were not established. Go provided the required parameter-absence evidence.
+
+### Artifacts and next assignment
+
+- [Verified note](../docs/week-05/day-24-live-parameter-access.md)
+- [Lab evidence](../labs/week-05/day-24-live-parameter-access/README.md)
+- [Redacted permission template](../labs/week-05/day-24-live-parameter-access/policy-template.json)
+- [Social posts](../posts/week-05/day-24-live-parameter-access.md)
+- Day 25 starts Week 6 storage/database work: DynamoDB access patterns, one disposable table, and two Go read checks. Loaded October 27 for October 28, 11:00 PM Lagos. No milestone completion claimed.
