@@ -48,7 +48,8 @@
 | 20 | Oct 19 | Read a non-secret parameter with the Go AWS SDK | 11:00 PM | ✅ Passed | 6/6; SDK read, typed errors, deletion, source logout, and explanations verified | Draft delivered |
 | 21 | Oct 19 | Audit Parameter Store activity in CloudTrail | 11:00 PM | ✅ Passed | 6/6; two matched events, safe timeline, explanations, and read-only scope verified | Draft delivered |
 | 22 | Oct 27 (from Oct 19) | Diagnose an explicit IAM deny in simulation | 11:00 PM | ✅ Passed Oct 27 | 6/6; exact policy comparison, four reported decisions, matched deny, explanations, three risk/control pairs, and no-change confirmation | Draft delivered |
-| 23 | Oct 28 (loaded Oct 27) | Validate and narrow an IAM policy | Oct 28, 11:00 PM | ⬜ Assigned | Basic Access Analyzer validation and scope reduction; no submission yet | Not yet |
+| 23 | Oct 28 due; passed Oct 27 | Validate and narrow an IAM policy | Oct 28, 11:00 PM | ✅ Passed Oct 27 | 6/6; three controlled JSON variants, actual AWS findings, scope reduction, corrected explanations, and cleanup verified | Draft delivered |
+| 24 | Oct 28 (loaded Oct 27) | Test live least-privilege Parameter Store access | Oct 28, 11:00 PM | ⬜ Assigned | Temporary CLI role; one allowed and one denied existing parameter; no submission yet | Not yet |
 
 ---
 
@@ -1594,3 +1595,23 @@ Simulator allow is not proof of live S3 authorization. A real intentional deny r
 - [Saved lab evidence](../labs/week-05/day-22-iam-deny-diagnosis/README.md)
 - [Daily social posts](../posts/week-05/day-22-iam-deny-diagnosis.md)
 - Day 23: basic AWS policy validation and narrowing; loaded October 27 for October 28, 11:00 PM Lagos. Live least-privilege authorization remains pending; no milestone completion claimed.
+
+## Day 23 verification — October 27
+
+Passed October 27, 2026, ahead of the original October 28 due date: all six criteria supported by learner-reported AWS editor findings, corrected explanations, cleanup declarations, and inspection of saved artifacts. No independent AWS request was made by the coach.
+
+### Verified evidence
+
+- All three JSON files parse. Broken to broad changes only s3:GetObjet to s3:GetObject. Broad to scoped changes only Resource * to the fictional reports/daily/* object prefix.
+- Basic AWS validation: broken Errors=1 with INVALID_ACTION; Security/Warnings/Suggestions=0. Broad and scoped: all four finding counts=0.
+- Learner explained why broad Resource * exceeded the daily-report requirement despite zero findings. The action still limits the granted operation to GetObject.
+- After correction, learner distinguished policy simulation's allow/deny decision from a real operation using a real identity/resource. Saved notes distinguish JSON syntax, AWS validation, simulation, and live tests.
+- README check reported exit 0 and contents were reviewed. Editor canceled; no policy saved/attached, analyzer/resource created, paid custom check run, or real S3 data accessed.
+
+### Scope and next assignment
+
+No live S3 access or complete least-privilege guarantee is claimed. The Week 5 validation/reduction task is complete; live scoped authorization remains pending. Day 24 is loaded for October 28 and will use CLI temporary-role access to two non-secret SSM parameters, with same-session cleanup. No milestone completion claimed.
+
+- [Verified note](../docs/week-05/day-23-iam-policy-validation.md)
+- [Lab evidence](../labs/week-05/day-23-iam-policy-validation/README.md)
+- [Social posts](../posts/week-05/day-23-iam-policy-validation.md)

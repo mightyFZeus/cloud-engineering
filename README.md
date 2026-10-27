@@ -38,7 +38,8 @@ The course is built around roughly 10 focused hours per week. Every daily milest
 | 20 | Read a non-secret parameter with the Go AWS SDK | Passed | [Write-up](docs/week-05/day-20-go-parameter-store.md) · [Posts](posts/week-05/day-20-go-parameter-store.md) |
 | 21 | Audit Parameter Store activity in CloudTrail | Passed | [Write-up](docs/week-05/day-21-cloudtrail-audit.md) · [Posts](posts/week-05/day-21-cloudtrail-audit.md) |
 | 22 | Diagnose an explicit IAM deny in simulation | Passed | [Write-up](docs/week-05/day-22-iam-deny-diagnosis.md) · [Lab](labs/week-05/day-22-iam-deny-diagnosis/) · [Posts](posts/week-05/day-22-iam-deny-diagnosis.md) |
-| 23 | Validate and narrow an IAM policy | Assigned for Oct 28 | [Assignment](assignments/day-23-iam-policy-validation.md) |
+| 23 | Validate and narrow an IAM policy | Passed Oct 27 | [Write-up](docs/week-05/day-23-iam-policy-validation.md) · [Lab](labs/week-05/day-23-iam-policy-validation/) · [Posts](posts/week-05/day-23-iam-policy-validation.md) |
+| 24 | Test live least-privilege Parameter Store access | Assigned for Oct 28 | [Assignment](assignments/day-24-live-parameter-access.md) |
 
 ## Repository map
 

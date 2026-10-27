@@ -201,7 +201,7 @@ The Week 2 runbook, learning log, and Milestone 1 post draft were prepared on Oc
 - Use a Go program with [AWS SDK for Go v2](https://docs.aws.amazon.com/sdk-for-go/) to call S3 or DynamoDB with the active role/profile.
 - [x] Store one non-secret setting in Parameter Store — Day 20 Go read and deletion verified. Secrets Manager was not used.
 - [x] Find your API actions in CloudTrail event history — Day 21 PutParameter/DeleteParameter matched.
-- Run IAM policy validation/Access Analyzer where available and reduce an over-broad policy.
+- [x] Run basic IAM Access Analyzer policy validation and reduce an over-broad policy — Day 23 invalid-action diagnosis and daily-report scoping verified October 27; no policy deployed.
 
 ### Document and test (2h)
 
@@ -604,7 +604,7 @@ Do not spend the first month memorizing for an exam. Use the Cloud Practitioner 
 |---|---:|---|
 | 1. Safe AWS operator (Weeks 1–2) | Sep 27 | 🟨 Core labs passed; stop exercise and external post pending |
 | 2. Networking and resilient compute (Weeks 3–4) | Oct 11 | 🟨 🟩 Core labs and runbook passed through Day 18; retrospective drafted; external social publication pending |
-| 3. Secure serverless workload (Weeks 5–7) | Nov 1 | 🟨 Days 19–22 IAM simulation/deny diagnosis, threat analysis, SSM SDK read/cleanup, and CloudTrail audit passed; Day 23 policy validation assigned; live least-privilege authorization and workload labs pending |
+| 3. Secure serverless workload (Weeks 5–7) | Nov 1 | 🟨 Days 19–23 IAM simulation/deny diagnosis, threat analysis, AWS policy validation, SSM SDK read/cleanup, and CloudTrail audit passed; Day 24 live SSM authorization assigned; live least-privilege authorization and workload labs pending |
 | 4. IaC, Kubernetes/EKS, and secure delivery (Weeks 8–10) | Nov 22 | ⬜ Not started |
 | 5. Operable, portfolio-ready capstone (Weeks 11–12) | Dec 6 | ⬜ Not started |
 
