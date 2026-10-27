@@ -1,0 +1,28 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadReportsObjects",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::amzn-s3-demo-cloud-eng/reports/*"
+    },
+    {
+      "Sid": "ListReportsPrefix",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::amzn-s3-demo-cloud-eng",
+      "Condition": {
+        "StringLike": {
+          "s3:prefix": "reports/*"
+        }
+      }
+    },
+    {
+      "Sid": "DenyRestrictedReports",
+      "Effect": "Deny",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::amzn-s3-demo-cloud-eng/reports/restricted/*"
+    }
+  ]
+}

@@ -7,7 +7,7 @@
 
 ## Verification workflow
 
-1. The daily assignment contains an outcome, exact steps, learning links, safety notes, submission evidence, and pass/fail criteria.
+1. Every standalone assignment starts immediately after its title with **Read first**, containing one or two authoritative references, a reading timebox, and what to focus on. Present this required reading before hands-on steps in both the file and the chat walkthrough. The rest contains an outcome, exact steps, safety notes, submission evidence, and pass/fail criteria.
 2. Submit evidence in this task by 11:00 PM. Never include credentials, tokens, full AWS account IDs, unredacted ARNs, private IPs, or secrets.
 3. The submission is marked **Passed**, **Needs correction**, **Incomplete**, or **Not submitted**.
 4. A failed or incomplete prerequisite is corrected before unrelated work is added.
@@ -47,7 +47,8 @@
 | 19 | Oct 19 | Simulate least-privilege S3 prefix access | 11:00 PM | ✅ Passed | 6/6; five simulator decisions, resource/context scope, explanations, and no-resource confirmation | Draft delivered |
 | 20 | Oct 19 | Read a non-secret parameter with the Go AWS SDK | 11:00 PM | ✅ Passed | 6/6; SDK read, typed errors, deletion, source logout, and explanations verified | Draft delivered |
 | 21 | Oct 19 | Audit Parameter Store activity in CloudTrail | 11:00 PM | ✅ Passed | 6/6; two matched events, safe timeline, explanations, and read-only scope verified | Draft delivered |
-| 22 | Oct 19 | Diagnose an explicit IAM deny in simulation | 11:00 PM | Assigned | Custom simulator; no real policies attached or resources created | Not yet |
+| 22 | Oct 27 (from Oct 19) | Diagnose an explicit IAM deny in simulation | 11:00 PM | ✅ Passed Oct 27 | 6/6; exact policy comparison, four reported decisions, matched deny, explanations, three risk/control pairs, and no-change confirmation | Draft delivered |
+| 23 | Oct 28 (loaded Oct 27) | Validate and narrow an IAM policy | Oct 28, 11:00 PM | ⬜ Assigned | Basic Access Analyzer validation and scope reduction; no submission yet | Not yet |
 
 ---
 
@@ -1465,7 +1466,7 @@ Passed October 14, 2026: six criteria verified by reading the saved runbook and 
 - Nonempty README check exited 0; no new AWS resources created; prior Day 16 cleanup remains confirmed.
 - Coach corrected two relative evidence links; all three links now resolve locally.
 
-See the [runbook](../../labs/week-04/day-18-resilient-compute-runbook/README.md).
+See the [runbook](../labs/week-04/day-18-resilient-compute-runbook/README.md).
 
 ## References
 
@@ -1498,8 +1499,8 @@ Simulation does not issue real S3 operations or prove live access. Other policie
 
 ## Artifacts and safe commands
 
-- [Policy](../../labs/week-05/day-19-iam-prefix-simulation/policy.json)
-- [Results and explanation](../../labs/week-05/day-19-iam-prefix-simulation/README.md)
+- [Policy](../labs/week-05/day-19-iam-prefix-simulation/policy.json)
+- [Results and explanation](../labs/week-05/day-19-iam-prefix-simulation/README.md)
 - Commands: python3 -m json.tool for local JSON syntax, test -s for README presence; console Custom mode for simulated authorization. No raw console output or real identifiers retained.
 
 ## References
@@ -1533,7 +1534,7 @@ A sign-in endpoint connectivity error occurred during cleanup. A diagnostic requ
 
 Command summary: aws login; authentication check with identity output discarded; go mod init/go get/go mod tidy; gofmt/go build; profile-selected local Go runs; scoped aws ssm delete-parameter; aws logout. No raw AWS response, credential cache, real ARN, account ID, or login URL is saved.
 
-[Lab source and evidence](../../labs/week-05/day-20-go-parameter-store/README.md)
+[Lab source and evidence](../labs/week-05/day-20-go-parameter-store/README.md)
 
 ## References
 
@@ -1562,9 +1563,34 @@ Event history covers recorded management events for the selected Region over the
 
 ## Artifact
 
-[Sanitized audit timeline](../../labs/week-05/day-21-cloudtrail-audit/README.md)
+[Sanitized audit timeline](../labs/week-05/day-21-cloudtrail-audit/README.md)
 
 ## References
 
 - [CloudTrail Event history](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/view-cloudtrail-events.html)
 - [Systems Manager CloudTrail integration](https://docs.aws.amazon.com/systems-manager/latest/userguide/monitoring-cloudtrail-logs.html)
+
+## Day 22 verification — October 27
+
+Passed October 27, 2026: six criteria supported by learner-reported console checkpoints, explanations, and inspection of saved artifacts. No independent AWS execution by the coach.
+
+### Verified evidence
+
+- Saved baseline parses and equals Day 19 policy. Restricted policy equals baseline plus the exact DenyRestrictedReports GetObject deny on the fictional reports/restricted/* prefix.
+- One identity-based policy selected in Custom mode for each reported simulation.
+- Baseline/restricted object: allowed; restricted policy/restricted object: explicit deny with matched Sid DenyRestrictedReports; restricted policy/ordinary report: allowed; restored baseline/restricted object: allowed.
+- Learner correctly distinguished explicit deny from absence of an applicable allow and explained the unaffected ordinary report.
+- Saved threat analysis includes assets, actors, request boundary, and three proposed risk/control pairs. Content denial does not imply object names are hidden from permitted listings.
+- Baseline JSON, restricted JSON, and README checks reported exit 0. Saved contents were reviewed; file presence is only a supporting check.
+- No real policies attached, AWS resources created, or controls changed, as confirmed by the learner.
+
+### Scope and limits
+
+Simulator allow is not proof of live S3 authorization. A real intentional deny remains in place while the policy owner considers approved access. Proposed controls were not deployed. The prior simulator loading error cleared sufficiently for the October 27 tests; its original cause is unknown.
+
+### Artifacts and next assignment
+
+- [Verified Day 22 note](../docs/week-05/day-22-iam-deny-diagnosis.md)
+- [Saved lab evidence](../labs/week-05/day-22-iam-deny-diagnosis/README.md)
+- [Daily social posts](../posts/week-05/day-22-iam-deny-diagnosis.md)
+- Day 23: basic AWS policy validation and narrowing; loaded October 27 for October 28, 11:00 PM Lagos. Live least-privilege authorization remains pending; no milestone completion claimed.

@@ -10,7 +10,7 @@ The course is built around roughly 10 focused hours per week. Every daily milest
 - Build practical skills in Linux, networking, IAM, EC2, S3, containers, Terraform, CI/CD, observability, and troubleshooting.
 - Run Kubernetes locally before deploying a short-lived Amazon EKS environment.
 - Practice EKS Pod Identity, rollouts, rollbacks, monitoring, and failure diagnosis.
-- Complete three portfolio projects with architecture, security, cost, deployment, and cleanup documentation.
+- Complete one polished portfolio project with architecture, security, cost, deployment, and cleanup documentation; expand to other projects afterward.
 
 ## Current progress
 
@@ -37,7 +37,8 @@ The course is built around roughly 10 focused hours per week. Every daily milest
 | 19 | Simulate least-privilege S3 prefix access | Passed | [Write-up](docs/week-05/day-19-iam-prefix-simulation.md) · [Posts](posts/week-05/day-19-iam-prefix-simulation.md) |
 | 20 | Read a non-secret parameter with the Go AWS SDK | Passed | [Write-up](docs/week-05/day-20-go-parameter-store.md) · [Posts](posts/week-05/day-20-go-parameter-store.md) |
 | 21 | Audit Parameter Store activity in CloudTrail | Passed | [Write-up](docs/week-05/day-21-cloudtrail-audit.md) · [Posts](posts/week-05/day-21-cloudtrail-audit.md) |
-| 22 | Diagnose an explicit IAM deny in simulation | Assigned | [Assignment](assignments/day-22-iam-deny-diagnosis.md) |
+| 22 | Diagnose an explicit IAM deny in simulation | Passed | [Write-up](docs/week-05/day-22-iam-deny-diagnosis.md) · [Lab](labs/week-05/day-22-iam-deny-diagnosis/) · [Posts](posts/week-05/day-22-iam-deny-diagnosis.md) |
+| 23 | Validate and narrow an IAM policy | Assigned for Oct 28 | [Assignment](assignments/day-23-iam-policy-validation.md) |
 
 ## Repository map
 

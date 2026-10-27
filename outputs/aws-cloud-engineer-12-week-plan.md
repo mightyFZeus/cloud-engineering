@@ -42,6 +42,10 @@ Useful setup references: [IAM security best practices](https://docs.aws.amazon.c
 
 ---
 
+## Assignment presentation preference
+
+Begin every standalone daily lesson with **Read first** immediately below the title. Put the one or two authoritative reference links there, state the reading timebox and focus, and show the reading before the hands-on walkthrough in chat. Do not bury references after the lab steps.
+
 ## Week 1 — Sep 14–20: AWS foundation and a safe account
 
 **Outcome:** You can navigate AWS safely, explain its global structure and responsibility model, and use the CLI without treating the root user as an everyday identity.
@@ -209,7 +213,7 @@ The Week 2 runbook, learning log, and Milestone 1 post draft were prepared on Oc
 - [x] One least-privilege policy permits an intended action and blocks an unintended one — verified in isolated simulation on Day 19; live authorization remains to be tested.
 - [x] My Go code uses the default credential chain, not hard-coded keys.
 - [x] I found a lab action in CloudTrail.
-- [ ] Threat model and IAM failure analysis are committed.
+- [x] Threat model and IAM failure analysis are documented — Day 22 simulator diagnosis and three proposed risk/control pairs verified October 27; live authorization remains pending.
 
 ---
 
@@ -600,7 +604,7 @@ Do not spend the first month memorizing for an exam. Use the Cloud Practitioner 
 |---|---:|---|
 | 1. Safe AWS operator (Weeks 1–2) | Sep 27 | 🟨 Core labs passed; stop exercise and external post pending |
 | 2. Networking and resilient compute (Weeks 3–4) | Oct 11 | 🟨 🟩 Core labs and runbook passed through Day 18; retrospective drafted; external social publication pending |
-| 3. Secure serverless workload (Weeks 5–7) | Nov 1 | 🟨 Days 19–21 IAM simulation, SSM SDK read/cleanup, and CloudTrail audit passed; live least-privilege authorization, threat analysis, and workload labs pending |
+| 3. Secure serverless workload (Weeks 5–7) | Nov 1 | 🟨 Days 19–22 IAM simulation/deny diagnosis, threat analysis, SSM SDK read/cleanup, and CloudTrail audit passed; Day 23 policy validation assigned; live least-privilege authorization and workload labs pending |
 | 4. IaC, Kubernetes/EKS, and secure delivery (Weeks 8–10) | Nov 22 | ⬜ Not started |
 | 5. Operable, portfolio-ready capstone (Weeks 11–12) | Dec 6 | ⬜ Not started |
 
