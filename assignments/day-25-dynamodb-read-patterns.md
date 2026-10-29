@@ -5,11 +5,12 @@
 1. [DynamoDB Query key conditions](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.KeyConditionExpressions.html) — focus on partition-key equality, sort-key conditions, sorted results, and the 1 MB pagination limit.
 2. [DynamoDB examples for Go v2](https://docs.aws.amazon.com/sdk-for-go/v2/developer-guide/go_dynamodb_code_examples.html) — focus only on GetItem and Query. This assignment uses a smaller fixture than the full movie example.
 
-**Date:** October 28, 2026
+**Date:** October 29, 2026
 **Loaded:** October 27, 2026, after Day 24 passed early
-**Due:** October 28 at 11:00 PM Africa/Lagos
+**Original due:** October 28 at 11:00 PM Africa/Lagos
+**Due:** October 29 at 11:00 PM Africa/Lagos
 **Timebox:** 75–90 focused minutes, including cleanup and notes
-**Status:** Assigned; no Day 25 work verified yet.
+**Status:** Catch-up carried forward on October 29; no submission received for October 28. Complete this same lesson before starting another day.
 **Roadmap section:** Week 6 — storage and databases
 
 ## Outcome
