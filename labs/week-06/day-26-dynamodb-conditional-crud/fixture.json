@@ -1,0 +1,5 @@
+{
+  "PK": "USER#demo-a",
+  "SK": "JOB#001",
+  "jobStatus": "queued"
+}

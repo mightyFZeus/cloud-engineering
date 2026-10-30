@@ -51,7 +51,8 @@
 | 23 | Oct 28 due; passed Oct 27 | Validate and narrow an IAM policy | Oct 28, 11:00 PM | ✅ Passed Oct 27 | 6/6; three controlled JSON variants, actual AWS findings, scope reduction, corrected explanations, and cleanup verified | Draft delivered |
 | 24 | Oct 28 due; passed Oct 27 | Test live least-privilege Parameter Store access | Oct 28, 11:00 PM | ✅ Passed Oct 27 | 6/6; live role identity/allow/deny, exact redacted policy, Go-confirmed deletion, console role cleanup, profile removal, and logout verified | Draft delivered |
 | 25 | Oct 28; catch-up Oct 29; passed Oct 30 | Design DynamoDB keys and read jobs with Go | Oct 29, 11:00 PM | ✅ Passed Oct 30 | 6/6; exact Go reads, key/pagination/IAM explanations, saved source/fixture/evidence, table deletion and TableMissing/1, logout/0 | Draft delivered |
-| 26 | Oct 31 (loaded Oct 30) | Conditional DynamoDB CRUD with Go | Oct 31, 11:00 PM | ⬜ Assigned | Week 6; one job, guarded create/update/delete and explicit cleanup; no submission yet | Not yet |
+| 26 | Oct 31 due; passed Oct 30 | Conditional DynamoDB CRUD with Go | Oct 31, 11:00 PM | ✅ Passed Oct 30 | 6/6; six checks, exact duplicate/stale rejections and preserved states, saved evidence, table cleanup/TableMissing/1, logout/0 | Draft delivered |
+| 27 | Oct 31 (loaded Oct 30) | Private S3 transfers with presigned URLs | Oct 31, 11:00 PM | ⬜ Assigned | Week 6; one private bucket/object, safe signed PUT/GET and unsigned denial; no submission yet | Not yet |
 
 ---
 
@@ -1667,3 +1668,28 @@ Only the Week 6 access-pattern/key-design checklist item is complete. Full Go CR
 - [Lab evidence](../labs/week-06/day-25-dynamodb-read-patterns/README.md)
 - [Social posts](../posts/week-06/day-25-dynamodb-read-patterns.md)
 - Day 26: conditional DynamoDB CRUD with Go, loaded October 30 for October 31 at 11:00 PM Lagos. One guided 75–90-minute lesson; no second required lesson for October 30.
+
+## Day 26 verification — October 30
+
+Passed October 30, 2026, before the October 31 due date: all six criteria supported by learner-run AWS results, explanations, and saved-artifact inspection. The coach did not make authenticated AWS requests or inspect private AWS configuration.
+
+### Verified evidence
+
+- Planned absent -> queued -> running -> absent sequence and full-key fixture saved before creation.
+- The same-day budget check was reused. Source remote-flow login and identity check exited 0. The expected eu-west-1 table had String PK/SK, on-demand Standard settings, Active status, and initial emptiness.
+- Module setup, fixture JSON, formatting, tidy, and build reported exit 0. The saved source exactly matches the reviewed, offline-built template.
+- create check, duplicate guard, update check, stale guard, delete check, and absent item check all passed; overall writer exit 0.
+- Both expected guard categories were ConditionalCheckFailedException. Reviewed code requires the exact category plus strong-read preservation of queued/running state.
+- Successful update checked ALL_NEW. Running-state guarded delete checked ALL_OLD. The final strong GetItem confirmed no item data.
+- Learner explained PutItem overwrite, rejected write conditions, stale-state protection, and missing item versus missing table.
+- Table deleted and absent after refresh; no backup. Separate read-only Day 25 reader returned TableMissing/exit 1. Source logout/exit 0; other resources/features reported none.
+- Substantive README evidence saved and reviewed; its nonempty check exited 0. Safe source, fixture, module files, note, and social drafts saved.
+
+### Roadmap and next assignment
+
+Days 25–26 now support the Week 6 Go CRUD/query checklist item. The broader milestone remains incomplete: private S3 presigned access, recovery, storage decisions, live S3 prefix authorization, and serverless workload tasks remain pending. No multi-client concurrency, general-pagination, production retry/idempotency, transaction, or IAM-isolation claim is made.
+
+- [Verified note](../docs/week-06/day-26-dynamodb-conditional-crud.md)
+- [Lab evidence](../labs/week-06/day-26-dynamodb-conditional-crud/README.md)
+- [Social posts](../posts/week-06/day-26-dynamodb-conditional-crud.md)
+- Day 27: private S3 transfers with presigned URLs, loaded October 30 for October 31 at 11:00 PM Lagos. Planned 75–90 minutes, one disposable bucket/object, complete cleanup, and no saved URLs or actual bucket name. No Day 27 result is verified.
