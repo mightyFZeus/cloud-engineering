@@ -50,7 +50,8 @@
 | 22 | Oct 27 (from Oct 19) | Diagnose an explicit IAM deny in simulation | 11:00 PM | ✅ Passed Oct 27 | 6/6; exact policy comparison, four reported decisions, matched deny, explanations, three risk/control pairs, and no-change confirmation | Draft delivered |
 | 23 | Oct 28 due; passed Oct 27 | Validate and narrow an IAM policy | Oct 28, 11:00 PM | ✅ Passed Oct 27 | 6/6; three controlled JSON variants, actual AWS findings, scope reduction, corrected explanations, and cleanup verified | Draft delivered |
 | 24 | Oct 28 due; passed Oct 27 | Test live least-privilege Parameter Store access | Oct 28, 11:00 PM | ✅ Passed Oct 27 | 6/6; live role identity/allow/deny, exact redacted policy, Go-confirmed deletion, console role cleanup, profile removal, and logout verified | Draft delivered |
-| 25 | Oct 28; catch-up Oct 29 (loaded Oct 27) | Design DynamoDB keys and read jobs with Go | Oct 29, 11:00 PM | ⬜ Assigned — catch-up | Oct 28 not submitted; carried forward Oct 29 with the same Week 6 scope: one short-lived table, three fictional items, GetItem and Query; no submission yet | Not yet |
+| 25 | Oct 28; catch-up Oct 29; passed Oct 30 | Design DynamoDB keys and read jobs with Go | Oct 29, 11:00 PM | ✅ Passed Oct 30 | 6/6; exact Go reads, key/pagination/IAM explanations, saved source/fixture/evidence, table deletion and TableMissing/1, logout/0 | Draft delivered |
+| 26 | Oct 31 (loaded Oct 30) | Conditional DynamoDB CRUD with Go | Oct 31, 11:00 PM | ⬜ Assigned | Week 6; one job, guarded create/update/delete and explicit cleanup; no submission yet | Not yet |
 
 ---
 
@@ -1642,3 +1643,27 @@ Live scoped SSM GetParameter authorization is demonstrated for the tested caller
 - [Redacted permission template](../labs/week-05/day-24-live-parameter-access/policy-template.json)
 - [Social posts](../posts/week-05/day-24-live-parameter-access.md)
 - Day 25 starts Week 6 storage/database work: DynamoDB access patterns, one disposable table, and two Go read checks. Loaded October 27 for October 28, 11:00 PM Lagos; not submitted, so the same lesson was carried forward to October 29, 11:00 PM Lagos. No milestone completion claimed.
+
+## Day 25 verification — October 30
+
+Passed October 30, 2026, after the original October 28 and carried-forward October 29 deadlines: all six criteria supported by learner-run AWS checkpoints, explanations, and inspection of saved artifacts. The coach did not make authenticated AWS requests or inspect private AWS configuration.
+
+### Verified evidence
+
+- Access patterns and String PK/SK design were saved before creation. The three-item fictional fixture matches the intended jobs exactly.
+- eu-west-1 and budget checked; expected on-demand Standard table reported Active with PK/SK String. Three items reported visible.
+- Fresh private-window remote-flow login and source identity check exited 0 after earlier browser HTTP 400 failures. The original cause remains unproven.
+- Actual saved Go code matches the reviewed implementation: default credential chain, explicit Region, bounded contexts, full GetItem key, strongly consistent ordered Query, exact typed content checks, and safe failure categories.
+- Fixture JSON, formatting, module tidy, and build reported exit 0. GetItem and Query checks passed with overall exit 0; the reviewed source was also built offline successfully.
+- Learner explained full-key lookup, per-user Query selection, IncompletePage handling, and why selection does not prove IAM tenant isolation.
+- Table deleted and absent after console refresh, no backup created; post-delete SDK TableMissing/exit 1. Source logout/exit 0; other resources/features reported none.
+- README evidence was completed and inspected; its nonempty check exited 0. Source, fixture, module files, note, and posts are saved without raw AWS output or private identifiers.
+
+### Scope and next assignment
+
+Only the Week 6 access-pattern/key-design checklist item is complete. Full Go CRUD, private S3 pre-signed access, recovery, and the storage/serverless milestone remain incomplete. No general-pagination or IAM tenant-isolation test is claimed.
+
+- [Verified note](../docs/week-06/day-25-dynamodb-read-patterns.md)
+- [Lab evidence](../labs/week-06/day-25-dynamodb-read-patterns/README.md)
+- [Social posts](../posts/week-06/day-25-dynamodb-read-patterns.md)
+- Day 26: conditional DynamoDB CRUD with Go, loaded October 30 for October 31 at 11:00 PM Lagos. One guided 75–90-minute lesson; no second required lesson for October 30.

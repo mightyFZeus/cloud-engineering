@@ -40,10 +40,13 @@ The course is built around roughly 10 focused hours per week. Every daily milest
 | 22 | Diagnose an explicit IAM deny in simulation | Passed | [Write-up](docs/week-05/day-22-iam-deny-diagnosis.md) · [Lab](labs/week-05/day-22-iam-deny-diagnosis/) · [Posts](posts/week-05/day-22-iam-deny-diagnosis.md) |
 | 23 | Validate and narrow an IAM policy | Passed Oct 27 | [Write-up](docs/week-05/day-23-iam-policy-validation.md) · [Lab](labs/week-05/day-23-iam-policy-validation/) · [Posts](posts/week-05/day-23-iam-policy-validation.md) |
 | 24 | Test live least-privilege Parameter Store access | Passed Oct 27 | [Write-up](docs/week-05/day-24-live-parameter-access.md) · [Lab](labs/week-05/day-24-live-parameter-access/) · [Posts](posts/week-05/day-24-live-parameter-access.md) |
-| 25 | Design DynamoDB keys and read jobs with Go | Assigned for Oct 28 | [Assignment](assignments/day-25-dynamodb-read-patterns.md) |
+| 25 | Design DynamoDB keys and read jobs with Go | Passed Oct 30 | [Write-up](docs/week-06/day-25-dynamodb-read-patterns.md) · [Lab](labs/week-06/day-25-dynamodb-read-patterns/) · [Posts](posts/week-06/day-25-dynamodb-read-patterns.md) |
+| 26 | Conditional DynamoDB CRUD with Go | Assigned for Oct 31 | [Assignment](assignments/day-26-dynamodb-conditional-crud.md) |
 
 ## Repository map
 
+- [`docs/week-06/`](docs/week-06/) — DynamoDB key design, read checks, and storage notes.
+- [`posts/week-06/`](posts/week-06/) — Week 6 verified learning drafts.
 - [`docs/week-01/`](docs/week-01/) — verified daily learning notes and command summaries.
 - [`docs/week-02/`](docs/week-02/) — EC2, Linux, S3, and Week 2 operations notes.
 - [`docs/week-03/`](docs/week-03/) — VPC planning, routing, and network-validation notes.

@@ -1,0 +1,5 @@
+[
+  {"PK":"USER#demo-a","SK":"JOB#001","jobStatus":"queued"},
+  {"PK":"USER#demo-a","SK":"JOB#002","jobStatus":"complete"},
+  {"PK":"USER#demo-b","SK":"JOB#001","jobStatus":"queued"}
+]

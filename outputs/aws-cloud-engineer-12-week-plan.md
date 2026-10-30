@@ -242,7 +242,7 @@ The Week 2 runbook, learning log, and Milestone 1 post draft were prepared on Oc
 
 ### Done checklist
 
-- [ ] DynamoDB keys were derived from access patterns, not chosen after coding.
+- [x] DynamoDB keys were derived from access patterns, not chosen after coding. — Day 25 passed October 30: exact GetItem/Query checks and cleanup verified; CRUD remains pending.
 - [ ] Go CRUD/query operations work without embedded credentials.
 - [ ] A private S3 object was accessed through a time-limited pre-signed URL.
 - [ ] I successfully restored one item/object in a recovery exercise.
@@ -604,7 +604,7 @@ Do not spend the first month memorizing for an exam. Use the Cloud Practitioner 
 |---|---:|---|
 | 1. Safe AWS operator (Weeks 1–2) | Sep 27 | 🟨 Core labs passed; stop exercise and external post pending |
 | 2. Networking and resilient compute (Weeks 3–4) | Oct 11 | 🟨 🟩 Core labs and runbook passed through Day 18; retrospective drafted; external social publication pending |
-| 3. Secure serverless workload (Weeks 5–7) | Nov 1 | 🟨 Days 19–24 IAM simulation/diagnosis, validation, live scoped SSM authorization/cleanup, threat analysis, and audit passed; Day 25 DynamoDB reads assigned; live S3 prefix, storage, and serverless workload labs pending |
+| 3. Secure serverless workload (Weeks 5–7) | Nov 1 | 🟨 Days 19–24 IAM/audit and Day 25 DynamoDB key/read labs passed; Day 26 conditional CRUD assigned; live S3 prefix, remaining storage/recovery, and serverless workload labs pending |
 | 4. IaC, Kubernetes/EKS, and secure delivery (Weeks 8–10) | Nov 22 | ⬜ Not started |
 | 5. Operable, portfolio-ready capstone (Weeks 11–12) | Dec 6 | ⬜ Not started |
 

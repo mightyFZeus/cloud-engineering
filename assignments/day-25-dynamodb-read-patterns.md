@@ -10,7 +10,7 @@
 **Original due:** October 28 at 11:00 PM Africa/Lagos
 **Due:** October 29 at 11:00 PM Africa/Lagos
 **Timebox:** 75–90 focused minutes, including cleanup and notes
-**Status:** Catch-up carried forward on October 29; no submission received for October 28. Complete this same lesson before starting another day.
+**Status:** Passed October 30, 2026 — six criteria supported after login recovery, exact read checks, explanations, saved evidence, and cleanup. Original and carried-forward deadlines are retained as history.
 **Roadmap section:** Week 6 — storage and databases
 
 ## Outcome
