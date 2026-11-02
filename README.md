@@ -42,7 +42,8 @@ The course is built around roughly 10 focused hours per week. Every daily milest
 | 24 | Test live least-privilege Parameter Store access | Passed Oct 27 | [Write-up](docs/week-05/day-24-live-parameter-access.md) · [Lab](labs/week-05/day-24-live-parameter-access/) · [Posts](posts/week-05/day-24-live-parameter-access.md) |
 | 25 | Design DynamoDB keys and read jobs with Go | Passed Oct 30 | [Write-up](docs/week-06/day-25-dynamodb-read-patterns.md) · [Lab](labs/week-06/day-25-dynamodb-read-patterns/) · [Posts](posts/week-06/day-25-dynamodb-read-patterns.md) |
 | 26 | Conditional DynamoDB CRUD with Go | Passed Oct 30 | [Write-up](docs/week-06/day-26-dynamodb-conditional-crud.md) · [Lab](labs/week-06/day-26-dynamodb-conditional-crud/) · [Posts](posts/week-06/day-26-dynamodb-conditional-crud.md) |
-| 27 | Private S3 transfers with presigned URLs | Catch-up for Nov 2 | [Assignment](assignments/day-27-s3-presigned-transfer.md) |
+| 27 | Private S3 transfers with presigned URLs | Passed Nov 2 | [Write-up](docs/week-06/day-27-s3-presigned-transfer.md) · [Lab](labs/week-06/day-27-s3-presigned-transfer/) · [Posts](posts/week-06/day-27-s3-presigned-transfer.md) |
+| 28 | Recover an overwritten S3 object with versioning | Assigned for Nov 3 | [Assignment](assignments/day-28-s3-version-recovery.md) |
 
 ## Repository map
 

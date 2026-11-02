@@ -52,7 +52,8 @@
 | 24 | Oct 28 due; passed Oct 27 | Test live least-privilege Parameter Store access | Oct 28, 11:00 PM | ✅ Passed Oct 27 | 6/6; live role identity/allow/deny, exact redacted policy, Go-confirmed deletion, console role cleanup, profile removal, and logout verified | Draft delivered |
 | 25 | Oct 28; catch-up Oct 29; passed Oct 30 | Design DynamoDB keys and read jobs with Go | Oct 29, 11:00 PM | ✅ Passed Oct 30 | 6/6; exact Go reads, key/pagination/IAM explanations, saved source/fixture/evidence, table deletion and TableMissing/1, logout/0 | Draft delivered |
 | 26 | Oct 31 due; passed Oct 30 | Conditional DynamoDB CRUD with Go | Oct 31, 11:00 PM | ✅ Passed Oct 30 | 6/6; six checks, exact duplicate/stale rejections and preserved states, saved evidence, table cleanup/TableMissing/1, logout/0 | Draft delivered |
-| 27 | Oct 31; catch-up Nov 2 (loaded Oct 30) | Private S3 transfers with presigned URLs | Nov 2, 11:00 PM | ⬜ Assigned — catch-up | Oct 31 not submitted; carried forward Nov 2 with the same Week 6 private bucket/object, signed PUT/GET, unsigned denial, and cleanup scope; no submission yet | Not yet |
+| 27 | Oct 31; catch-up/passed Nov 2 | Private S3 transfers with presigned URLs | Nov 2, 11:00 PM | ✅ Passed Nov 2 | 6/6; signed PUT/GET 200, exact bytes, unsigned 403, safe source/explanations, full cleanup/NoSuchBucket/1, env unset/logout0 | Draft delivered |
+| 28 | Nov 3 (loaded Nov 2) | Recover an overwritten S3 object with versioning | Nov 3, 11:00 PM | ⬜ Assigned | Week 6; one versioned object, exact current-byte recovery and full version cleanup; no submission yet | Not yet |
 
 ---
 
@@ -1697,3 +1698,28 @@ Days 25–26 now support the Week 6 Go CRUD/query checklist item. The broader mi
 ## Day 27 catch-up — November 2
 
 No submission was received for the original October 31 deadline. The same Private S3 Transfers with Presigned URLs lesson is carried forward to November 2 at 11:00 PM Lagos, with its 75–90-minute timebox, references, implementation scope, privacy requirements, and objective pass criteria unchanged. Day 28 is not assigned. No AWS outcome or cleanup result is newly verified.
+
+## Day 27 verification — November 2
+
+Passed November 2, 2026, after the original October 31 deadline and same-day catch-up assignment: all six criteria supported by learner-run AWS results, explanations, and inspection of saved artifacts. The coach did not make authenticated AWS requests or inspect private AWS configuration.
+
+### Verified evidence
+
+- eu-west-1, budget, and temporary aws-learning login/identity checks confirmed; both authentication commands exited 0.
+- One new initially empty general purpose bucket: shared global namespace, all four public-access blocks enabled, Bucket owner enforced/ACLs disabled, SSE-S3, versioning/Object Lock disabled, and no other features/policies reported.
+- Saved fictional payload matches exactly, including its newline. Module/S3 installation, formatting, tidy, and build exited 0.
+- Actual source matches the reviewed, offline-built and fake-transport-tested template: five-minute presigns, correct body/checksum/signed headers, bounded operations, safe output, and distinct read-only cleanup mode.
+- Signed PUT HTTP200/PASS; signed GET HTTP200/exact payload true/PASS; fresh unsigned GET HTTP403/private-access PASS; overall exit0. The object was reported visible in the console.
+- Learner explained signed authorization, bearer possession, earlier credential/resource/policy invalidation, and why configured expiry was not an expired-request test. The bucket remained private.
+- Coach clarification recorded separately: CLI logout alone does not prove all previously generated URLs revoked. This was not attributed as an additional learner statement.
+- Object deleted; bucket empty, deleted, and absent after refresh. Read-only SDK category BucketMissing from NoSuchBucket, exit1. Bucket variable unset; logout0; other resources/policy changes reported none.
+- Substantive README evidence saved and reviewed; nonempty check exit0. Program, payload, modules, note, and social drafts saved without actual names, signed URLs, credentials, or raw AWS responses.
+
+### Roadmap and next assignment
+
+The Week 6 private presigned-access checkbox is complete. Actual expiry, live S3 prefix IAM isolation, version recovery, storage decisions, and serverless workload tasks remain pending; no overall milestone is completed.
+
+- [Verified note](../docs/week-06/day-27-s3-presigned-transfer.md)
+- [Lab evidence](../labs/week-06/day-27-s3-presigned-transfer/README.md)
+- [Social posts](../posts/week-06/day-27-s3-presigned-transfer.md)
+- Day 28: recover one overwritten S3 object with versioning, loaded November 2 for November 3 at 11:00 PM Lagos. Its 75–90-minute timebox includes AWS's recommended 15-minute first-enablement interval, used for notes. No Day 28 result is verified.

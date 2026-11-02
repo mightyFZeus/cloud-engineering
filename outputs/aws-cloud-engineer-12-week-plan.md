@@ -244,7 +244,7 @@ The Week 2 runbook, learning log, and Milestone 1 post draft were prepared on Oc
 
 - [x] DynamoDB keys were derived from access patterns, not chosen after coding. — Day 25 passed October 30: exact GetItem/Query checks and cleanup verified.
 - [x] Go CRUD/query operations work without embedded credentials. — Days 25–26 passed October 30: temporary source credentials, exact reads, conditional writes, and cleanup verified.
-- [ ] A private S3 object was accessed through a time-limited pre-signed URL.
+- [x] A private S3 object was accessed through a time-limited pre-signed URL. — Day 27 passed November 2: signed PUT/GET 200, exact bytes, unsigned 403, configured five-minute lifetime, and cleanup verified; actual expiry was not tested.
 - [ ] I successfully restored one item/object in a recovery exercise.
 - [ ] Storage decision record is committed.
 
@@ -604,7 +604,7 @@ Do not spend the first month memorizing for an exam. Use the Cloud Practitioner 
 |---|---:|---|
 | 1. Safe AWS operator (Weeks 1–2) | Sep 27 | 🟨 Core labs passed; stop exercise and external post pending |
 | 2. Networking and resilient compute (Weeks 3–4) | Oct 11 | 🟨 🟩 Core labs and runbook passed through Day 18; retrospective drafted; external social publication pending |
-| 3. Secure serverless workload (Weeks 5–7) | Nov 1 | 🟨 Days 19–24 IAM/audit and Days 25–26 DynamoDB key/CRUD/query labs passed; Day 27 private S3 presigned transfers assigned; live S3 prefix, remaining storage/recovery, and serverless workload labs pending |
+| 3. Secure serverless workload (Weeks 5–7) | Nov 1 | 🟨 Days 19–24 IAM/audit, Days 25–26 DynamoDB, and Day 27 private S3 presigned transfers passed; Day 28 version recovery assigned; live S3 prefix, remaining storage/recovery, and serverless workload labs pending |
 | 4. IaC, Kubernetes/EKS, and secure delivery (Weeks 8–10) | Nov 22 | ⬜ Not started |
 | 5. Operable, portfolio-ready capstone (Weeks 11–12) | Dec 6 | ⬜ Not started |
 
