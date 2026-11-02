@@ -52,7 +52,7 @@
 | 24 | Oct 28 due; passed Oct 27 | Test live least-privilege Parameter Store access | Oct 28, 11:00 PM | ✅ Passed Oct 27 | 6/6; live role identity/allow/deny, exact redacted policy, Go-confirmed deletion, console role cleanup, profile removal, and logout verified | Draft delivered |
 | 25 | Oct 28; catch-up Oct 29; passed Oct 30 | Design DynamoDB keys and read jobs with Go | Oct 29, 11:00 PM | ✅ Passed Oct 30 | 6/6; exact Go reads, key/pagination/IAM explanations, saved source/fixture/evidence, table deletion and TableMissing/1, logout/0 | Draft delivered |
 | 26 | Oct 31 due; passed Oct 30 | Conditional DynamoDB CRUD with Go | Oct 31, 11:00 PM | ✅ Passed Oct 30 | 6/6; six checks, exact duplicate/stale rejections and preserved states, saved evidence, table cleanup/TableMissing/1, logout/0 | Draft delivered |
-| 27 | Oct 31 (loaded Oct 30) | Private S3 transfers with presigned URLs | Oct 31, 11:00 PM | ⬜ Assigned | Week 6; one private bucket/object, safe signed PUT/GET and unsigned denial; no submission yet | Not yet |
+| 27 | Oct 31; catch-up Nov 2 (loaded Oct 30) | Private S3 transfers with presigned URLs | Nov 2, 11:00 PM | ⬜ Assigned — catch-up | Oct 31 not submitted; carried forward Nov 2 with the same Week 6 private bucket/object, signed PUT/GET, unsigned denial, and cleanup scope; no submission yet | Not yet |
 
 ---
 
@@ -1693,3 +1693,7 @@ Days 25–26 now support the Week 6 Go CRUD/query checklist item. The broader mi
 - [Lab evidence](../labs/week-06/day-26-dynamodb-conditional-crud/README.md)
 - [Social posts](../posts/week-06/day-26-dynamodb-conditional-crud.md)
 - Day 27: private S3 transfers with presigned URLs, loaded October 30 for October 31 at 11:00 PM Lagos. Planned 75–90 minutes, one disposable bucket/object, complete cleanup, and no saved URLs or actual bucket name. No Day 27 result is verified.
+
+## Day 27 catch-up — November 2
+
+No submission was received for the original October 31 deadline. The same Private S3 Transfers with Presigned URLs lesson is carried forward to November 2 at 11:00 PM Lagos, with its 75–90-minute timebox, references, implementation scope, privacy requirements, and objective pass criteria unchanged. Day 28 is not assigned. No AWS outcome or cleanup result is newly verified.

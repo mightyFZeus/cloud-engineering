@@ -5,11 +5,12 @@
 1. [Download and upload with presigned URLs](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html) — focus on the signed operation/object, bearer-token handling, and the earlier of configured expiry or signing-credential expiry.
 2. [S3 examples for Go v2](https://docs.aws.amazon.com/sdk-for-go/v2/developer-guide/go_s3_code_examples.html) — focus only on PresignPutObject, PresignGetObject, and using their HTTP requests. Adapt the API shapes; replace example URL/raw-error logging with fixed safe categories.
 
-**Date:** October 31, 2026
+**Date:** November 2, 2026
 **Loaded:** October 30, 2026, after Day 26 verification
-**Due:** October 31 at 11:00 PM Africa/Lagos
+**Original due:** October 31 at 11:00 PM Africa/Lagos
+**Due:** November 2 at 11:00 PM Africa/Lagos
 **Timebox:** 75–90 focused minutes, including cleanup and notes
-**Status:** Assigned for October 31; loaded October 30. No submission received.
+**Status:** Catch-up carried forward November 2; no submission received for October 31. Complete this same lesson before starting another day.
 **Roadmap section:** Week 6 — storage and databases
 
 ## Outcome
